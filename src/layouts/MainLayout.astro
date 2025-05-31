@@ -1,0 +1,52 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import Aside from "../components/Aside.astro";
+
+const {
+  title,
+  description,
+  heroHeading,
+  heroSubheading,
+  heroBgImg,
+  mainHeading,
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <Hero
+    heroHeading={heroHeading}
+    heroSubheading={heroSubheading}
+    heroBgImg={heroBgImg}
+  />
+  <div class="py-5 container">
+    <div class="row g-5">
+      <main class="col-12 col-lg-8 text-center text-lg-start">
+        <h1 class="mb-3">{mainHeading}</h1>
+        <slot />
+      </main>
+      <Aside />
+    </div>
+  </div>
+  
+  <!-- Elfsight Google Reviews -->
+  <section class="container py-5">
+    <script src="https://static.elfsight.com/platform/platform.js" async
+    ></script>
+    <div
+      class="elfsight-app-fb7d1eca-cfda-467a-8de2-483ded2a6bdd"
+      data-elfsight-app-lazy
+    >
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="bg-danger py-5 text-center text-white">
+    <div class="container">
+      <h2 class="mb-3">Call Now For a Quote</h2>
+      <a href="tel:08007311260" class="btn btn-light btn-lg fw-bold wiggle"
+        ><i class="bi bi-telephone-fill"></i> 0800 7311 260</a
+      >
+    </div>
+  </div>
+</BaseLayout>
