@@ -156,7 +156,7 @@
 
     <!-- Quantity -->
     <div class="d-none" id="quantityDiv">
-      <label class="form-label fs-5">How many tyres do you need?</label>
+      <label class="form-label fs-5">How many tyres do you need replacing / repairing?</label>
       <select name="quantity" class="form-select form-select-lg">
         <option value="1">1 Tyre</option>
         <option value="2">2 Tyres</option>
@@ -378,7 +378,8 @@
 
     isTyreFlow =
       selectedService === "Mobile Tyre Fitting" ||
-      selectedService === "Emergency Mobile Tyre Fitting";
+      selectedService === "Emergency Mobile Tyre Fitting" ||
+      selectedService === "Puncture Repair";
 
     goToStep(isTyreFlow ? "tyreSizeDiv" : "locationDiv");
   });
