@@ -19,6 +19,7 @@ document.addEventListener("click", async function (e) {
     // await fetch("http://localhost/phone", {
       method: "POST",
       body: JSON.stringify({
+        url: window.location.href,
         event: "call_initiated",
         timestamp: new Date().toISOString(),
         urlParams: queryObject,
