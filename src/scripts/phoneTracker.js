@@ -14,7 +14,7 @@ document.addEventListener("click", async function (e) {
 
   // Send API request
   try {
-    await fetch("https://localhost/test", {
+    await fetch("https://safe-island-80193.herokuapp.com/phone", {
       method: "POST",
       body: JSON.stringify({
         event: "call_initiated",
