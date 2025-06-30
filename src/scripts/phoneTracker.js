@@ -9,12 +9,14 @@ document.addEventListener("click", async function (e) {
   const queryParams = new URLSearchParams(window.location.search);
   const queryObject = {};
   for (const [key, value] of queryParams.entries()) {
-    queryObject[key] = value;
+    queryObject[key.replace(/-/g, '_')] = value;
   }
+  console.log("Sending queryObject:", queryObject);
 
   // Send API request
   try {
     await fetch("https://safe-island-80193.herokuapp.com/phone", {
+    // await fetch("http://localhost/phone", {
       method: "POST",
       body: JSON.stringify({
         event: "call_initiated",
