@@ -16,7 +16,6 @@ document.addEventListener("click", async function (e) {
   // Send API request
   try {
     await fetch("https://safe-island-80193.herokuapp.com/phone", {
-    // await fetch("http://localhost/phone", {
       method: "POST",
       body: JSON.stringify({
         url: window.location.href,
