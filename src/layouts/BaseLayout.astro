@@ -6,7 +6,14 @@ import Footer from "../components/Footer.astro";
 const {
   title = "Freeway Mobile Tyres",
   description = "Welcome to Freeway Mobile Tyres.",
+  image,
+  imageAlt,
 } = Astro.props;
+
+const baseURL = Astro.site || new URL('https://freewaymobiletyres.co.uk');
+const canonicalURL = new URL(Astro.url.pathname, baseURL);
+const ogImage = image || '/img/logos/color-logo-no-background.webp';
+const ogImageAlt = imageAlt || 'Freeway Mobile Tyres Logo';
 ---
 
 <!doctype html>
@@ -37,6 +44,22 @@ const {
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(ogImage, canonicalURL).href} />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta property="og:url" content={canonicalURL} />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, canonicalURL).href} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
@@ -66,9 +89,7 @@ const {
     <Footer />
 
 
-    <script>
-      import "../scripts/bootstrap.bundle.min.js";
-      import "../scripts/phoneTracker.js"
-    </script>
+    <script src="/src/scripts/bootstrap.bundle.min.js"></script>
+    <script src="/src/scripts/phoneTracker.js"></script>
   </body>
 </html>

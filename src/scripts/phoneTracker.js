@@ -11,10 +11,12 @@ document.addEventListener("click", async function (e) {
   for (const [key, value] of queryParams.entries()) {
     queryObject[key.replace(/-/g, '_')] = value;
   }
-  console.log("Sending queryObject:", queryObject);
 
-  // Send API request
+  // Send API request with timeout
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+    
     await fetch("https://safe-island-80193.herokuapp.com/phone", {
       method: "POST",
       body: JSON.stringify({
@@ -26,9 +28,12 @@ document.addEventListener("click", async function (e) {
       headers: {
         "Content-Type": "application/json",
       },
+      signal: controller.signal,
     });
+    
+    clearTimeout(timeoutId);
   } catch (err) {
-    console.error("API call failed", err);
+    // Silently handle errors - don't interrupt user flow
   }
 
   // Proceed to dial after short delay

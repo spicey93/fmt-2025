@@ -125,8 +125,13 @@ document.getElementById("coordinatesBtn").addEventListener("click", () => {
         const res = await fetch(
           `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`
         );
+        
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        
         const data = await res.json();
-        const postcode = data.address.postcode;
+        const postcode = data.address?.postcode;
 
         if (!postcode) {
           alert("Unable to detect postcode.");
@@ -186,60 +191,4 @@ document.addEventListener("DOMContentLoaded", () => {
   showStep(currentStep);
 });
 
-// ... existing code ...
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("urlInput").value = window.location.href;
-  showStep(currentStep);
-});
-
-// Handle form submission
-const form = document.querySelector('form[name="Contact"]');
-
-form.addEventListener('submit', async (e) => {
-  e.preventDefault(); // Prevent default form submission
-  
-  const submitBtn = document.getElementById('customerBtn');
-  const originalText = submitBtn.innerHTML;
-  
-  // Show loading state
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
-  
-  try {
-    // Get form data
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-    
-    // Send to API
-    const response = await fetch('https://app.tyreemergency.com/api/freeway/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data)
-    });
-    
-    const result = await response.json();
-    
-    if (result.success) {
-      // Hide form and show success message
-      document.getElementById('quoteForm').innerHTML = `
-        <div class="text-center py-5">
-          <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
-          <h3 class="mt-3">Thank you!</h3>
-          <p class="lead">Your enquiry has been sent successfully.</p>
-          <p>We'll be in touch shortly.</p>
-        </div>
-      `;
-    } else {
-      throw new Error(result.message || 'Submission failed');
-    }
-    
-  } catch (error) {
-    console.error('Error:', error);
-    alert('Sorry, there was an error sending your enquiry. Please call us on 0800 7311 260');
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = originalText;
-  }
-});
