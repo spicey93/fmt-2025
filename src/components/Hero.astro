@@ -285,6 +285,11 @@ const years = new Date().getFullYear() - site.established;
       transition: transform var(--duration-base) var(--ease-out);
     }
 
+    /* The panel receives focus on open, but only as a container — no focus ring needed */
+    :global(.js) .quote-modal-panel:focus {
+      outline: none;
+    }
+
     :global(.js) .quote-modal:global(.is-open) .quote-modal-panel {
       transform: none;
     }
