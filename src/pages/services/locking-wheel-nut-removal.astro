@@ -1,9 +1,9 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
+import { heroImages } from "../../data/images";
 
 const title = "Locking Wheel Nut Removal In Dorset"
 const description = "Is your lock nut key missing or broken? We provide a mobile locking wheel nut removal service across many areas of Dorset."
-const heroBgImg = "url(/img/services/locking-wheel-nut-removal.webp)"
 const heroHeading = "Locking Wheel Nut Removal"
 const heroSubheading = "Lost Or Broke Your Lock Nut Key? We Can Remove Them Today"
 const mainHeading = "Mobile Locking Wheel Nut Removal"
@@ -14,8 +14,10 @@ const mainHeading = "Mobile Locking Wheel Nut Removal"
   description={description}
   heroHeading={heroHeading}
   heroSubheading={heroSubheading}
-  heroBgImg={heroBgImg}
+  heroImage={heroImages["locking-wheel-nut-removal"]}
+  heroImageAlt="A technician removing a locking wheel nut from a car wheel"
   mainHeading={mainHeading}
+  service={{ name: "Locking Wheel Nut Removal", description }}
 >
 <p>Freeway Mobile Tyres is your go-to company for mobile locking wheel nut removal in Poole and Bournemouth. We understand how frustrating it can be to have a damaged wheel nut key or a lost socket. Our expert technicians can remove your locking wheel nuts with universal tools, and we can perform this service at your location for no extra cost. Whether you're stuck at home or stranded on the side of the road, we can come to you and get you back on the road as quickly as possible.</p>
 <p>Locking wheel nuts are specially designed fasteners that prevent wheel theft. To remove them, you need a specific key that matches the same pattern as the fastener. Without the key, the wheel nut is much harder to remove. However, these days, wheel theft is not as prevalent as it once was, so locking wheel nuts tend to cause more hassle than they prevent. We regularly contend with locking wheel nuts overtightened and rounded by a garage or remove a security bolt after the key has gone missing.</p>

@@ -1,11 +1,11 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
-const title = "Mobile Tyre Fitting | Freeway Mobile Tyres";
+import { heroImages } from "../../data/images";
+const title = "Mobile Tyre Fitting";
 const description = "Need new tyres fitted at home or work in Dorset? Freeway Mobile Tyres offers convenient mobile tyre fitting services in Poole, Bournemouth, Christchurch, and surrounding areas. We're open 7 days a week and provide same-day fitting. Contact us for a quote!";
 const heroHeading = "Mobile Tyre Fitting";
 const heroSubheading = "Have Your Tyres Fitted at Home, Work, or Roadside Today";
-const heroBgImg = "url(/img/services/mobile-tyre-fitting.webp)";
-const mainHeading = "Mobile Tyre Fitting";
+const mainHeading = "Mobile Tyre Fitting Across Dorset";
 ---
 
 <MainLayout
@@ -13,8 +13,10 @@ const mainHeading = "Mobile Tyre Fitting";
   description={description}
   heroHeading={heroHeading}
   heroSubheading={heroSubheading}
-  heroBgImg={heroBgImg}
+  heroImage={heroImages["mobile-tyre-fitting"]}
+  heroImageAlt="A mobile tyre fitting technician changing a car tyre at a customer's home"
   mainHeading={mainHeading}
+  service={{ name: "Mobile Tyre Fitting", description }}
 >
 <p>
   Changing your tyres is an essential part of maintaining your vehicle’s

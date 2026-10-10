@@ -1,12 +1,12 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
+import { heroImages } from "../../data/images";
 
 const title = "Mobile Caravan Tyre Fitting In Dorset"
 const description = "Have your caravan tyres fitted at home with our mobile tyre service. We come to you at home or on-site. Contact us today for a quote."
-const heroBgImg = "url(/img/services/mobile-caravan-tyre-fitting.webp)"
 const heroHeading = "Mobile Caravan Tyre Fitting"
 const heroSubheading = "Have Your Caravan Tyres Fitted at Home or On-Site"
-const mainHeading = "Mobile Caravan Tyre Fitting"
+const mainHeading = "Specialist Caravan Tyre Fitting"
 ---
 
 <MainLayout
@@ -14,8 +14,10 @@ const mainHeading = "Mobile Caravan Tyre Fitting"
   description={description}
   heroHeading={heroHeading}
   heroSubheading={heroSubheading}
-  heroBgImg={heroBgImg}
+  heroImage={heroImages["mobile-caravan-tyre-fitting"]}
+  heroImageAlt="A technician fitting a tyre to a caravan on a driveway"
   mainHeading={mainHeading}
+  service={{ name: "Mobile Caravan Tyre Fitting", description }}
 >
 <p>Are you tired of having to tow your caravan to a tyre shop every time you need new tyres? Look no further than our <strong>caravan tyre fitting service</strong>. We bring the tyre shop to you, saving you time and hassle. Our service is available throughout Dorset, including <strong>Poole and Bournemouth</strong>.</p>
 <h2>Expert Caravan Tyre Repair and Replacement</h2>

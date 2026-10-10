@@ -1,9 +1,9 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
+import { heroImages } from "../../data/images";
 
 const title = "Alloy Wheel Repair In Poole & Bournemouth"
 const description = "If you've got a crack or buckle in your alloy wheel, our mobile technicians can come to you and repair it today!"
-const heroBgImg = "url(/img/services/freeway-mobile-tyres.webp)"
 const heroHeading = "Alloy Wheel Repair"
 const heroSubheading = "We Can Fix Your Cracked or Buckled Wheel at Home"
 const mainHeading = "Alloy Wheel Repair in Poole & Bournemouth"
@@ -14,8 +14,10 @@ const mainHeading = "Alloy Wheel Repair in Poole & Bournemouth"
   description={description}
   heroHeading={heroHeading}
   heroSubheading={heroSubheading}
-  heroBgImg={heroBgImg}
+  heroImage={heroImages["freeway-mobile-tyres"]}
+  heroImageAlt="A Freeway Mobile Tyres technician working on a vehicle's alloy wheel"
   mainHeading={mainHeading}
+  service={{ name: "Alloy Wheel Repair", description }}
 >
 <p>We specialize in <strong>alloy wheel repair</strong>, providing a convenient and mobile solution for those dealing with cracks or buckles that cause flat tires. Our skilled technicians are equipped with state-of-the-art tools and expertise to tackle any alloy wheel damage.</p>
         <p>With our mobile service, we come directly to you, whether you're in Poole or Bournemouth. Our goal is to restore your alloy wheel's integrity and get you back on the road safely. From welding cracks to straightening buckles, we offer professional and efficient repairs to ensure a smooth and enjoyable driving experience.</p>
