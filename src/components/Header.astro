@@ -1,184 +1,538 @@
 ---
-const tyreDropdown = {
-    title: "Mobile Tyres",
-    slug: "mobile-tyres",
-    subPages: [
-        {
-            title: "Mobile Tyre Fitting",
-            slug: "mobile-tyre-fitting"
-        },
-        {
-            title: "Emergency Mobile Tyre Fitting",
-            slug: "emergency-mobile-tyre-fitting"
-        },
-        {
-            title: "Mobile Caravan Tyre Fitting",
-            slug: "mobile-caravan-tyre-fitting"
-        },
-        {
-            title: "Puncture Repair",
-            slug: "puncture-repair",
-        }
-    ]
-}
+import { navGroups } from "../data/nav";
+import { site } from "../data/site";
+import Icon from "./Icon.astro";
 
-const servicesDropdown = {
-    title: "Services",
-    slug: "services",
-    subPages: [
-        {
-            title: "Locking Wheel Nut Removal",
-            slug: "locking-wheel-nut-removal"
-        },
-        {
-            title: "Tyre Pressure Monitoring System",
-            slug: "tyre-pressure-monitoring-system"
-        },
-        {
-            title: "Mobile Car Battery Replacement",
-            slug: "mobile-car-battery-replacement"
-        },
-        {
-            title: "Mobile Brake Fitting",
-            slug: "mobile-brake-fitting"
-        },
-        {
-            title: "AlloyGator Wheel Protection",
-            slug: "alloygator-wheel-protection"
-        },
-        {
-            title: "Alloy Wheel Repair",
-            slug: "alloy-wheel-repair"
-        },
-    ]
-}
-
-const coverageDropdown = {
-    title: "Coverage",
-    slug: "coverage",
-    subPages: [
-        {
-            title: "Blandford Forum",
-            slug: "blandford-forum"
-        },
-        {
-            title: "Bournemouth",
-            slug: "bournemouth"
-        },
-        {
-            title: "Christchurch",
-            slug: "christchurch"
-        },
-        {
-            slug: "dorchester", 
-            title: "Dorchester"
-        },
-        {
-            slug: "ferndown", 
-            title: "Ferndown"
-        },
-        {
-            slug: "gillingham", 
-            title: "Gillingham"
-        },
-        {
-            slug: "poole", 
-            title: "Poole"
-        },
-        {
-            slug: "ringwood", 
-            title: "Ringwood"
-        },
-        {
-            slug: "shaftesbury", 
-            title: "Shaftesbury"
-        },
-        {
-            slug: "sturminster-newton",
-            title: "Sturminster Newton"
-        },
-        {
-            slug: "swanage", 
-            title: "Swanage"
-        },
-        {
-            slug: "verwood", 
-            title: "Verwood"
-        },
-        {
-            slug: "wareham", 
-            title: "Wareham"
-        },
-        {
-            slug: "weymouth", 
-            title: "Weymouth"
-        },
-        {
-            slug: "wimborne", 
-            title: "Wimborne"
-        },
-    ]
-}
+const currentPath = Astro.url.pathname.replace(/\/$/, "");
 ---
 
+<div class="topbar">
+  <div class="container topbar-inner">
+    <p class="topbar-item">
+      <Icon name="clock" /> Open 7 days a week &middot; Same-day fitting
+    </p>
+    <p class="topbar-item topbar-rating">
+      <span class="stars" aria-hidden="true">
+        <Icon name="star" /><Icon name="star" /><Icon name="star" /><Icon name="star" /><Icon name="star" />
+      </span>
+      Rated {site.rating} from {site.reviewCount} Google reviews
+    </p>
+    <p class="topbar-item topbar-areas">
+      <Icon name="map" /> Covering Poole, Bournemouth &amp; all of Dorset
+    </p>
+  </div>
+</div>
 
-<header class="container py-3 d-flex align-items-center justify-content-between">
-
-    <a class="navbar-brand" href="/">
-        <img src="/img/logos/color-logo-no-background.webp" alt="Freeway Mobile Tyres" width="200" height="52">
+<header class="site-header" data-header>
+  <div class="container header-bar">
+    <a class="brand" href="/" aria-label="Freeway Mobile Tyres home">
+      <img
+        src="/img/logos/color-logo-no-background.webp"
+        alt="Freeway Mobile Tyres"
+        width="200"
+        height="52"
+      />
     </a>
-    <div class="d-none d-md-block">
-        <h5>Call Now For a Quote</h5>
-        <a class="btn btn-lg fw-bold btn-danger wiggle" href="tel:08007311260"><i class="bi bi-telephone-fill"></i> 0800 7311 260</a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul id="navbar" class="nav-list">
+        {
+          navGroups.map((group) => (
+            <li class="nav-item" data-dropdown>
+              <button
+                class:list={["nav-link", { "is-current": currentPath.startsWith(`/${group.slug}`) }]}
+                type="button"
+                data-dropdown-toggle
+                aria-expanded="false"
+              >
+                {group.title}
+                <Icon name="chevron-down" class="nav-chevron" />
+              </button>
+              <div class:list={["dropdown-menu", { "dropdown-menu--wide": group.subPages.length > 8 }]}>
+                <ul>
+                  {group.subPages.map((page) => (
+                    <li>
+                      <a
+                        href={`/${group.slug}/${page.slug}`}
+                        aria-current={currentPath === `/${group.slug}/${page.slug}` ? "page" : undefined}
+                      >
+                        {page.title}
+                        <Icon name="arrow-right" class="dropdown-arrow" />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))
+        }
+        <li class="nav-item">
+          <a class:list={["nav-link", { "is-current": currentPath === "/about" }]} href="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class:list={["nav-link", { "is-current": currentPath === "/contact" }]} href="/contact">Contact</a>
+        </li>
+        <li class="nav-item nav-mobile-cta">
+          <a class="btn btn-primary btn-lg btn-block" href={site.phoneHref}>
+            <Icon name="telephone" /> Call {site.phone}
+          </a>
+          <p>Free to call &middot; Open 7 days a week</p>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a href={site.phoneHref} class="header-phone">
+        <span class="header-phone-icon"><Icon name="telephone" /></span>
+        <span class="header-phone-text">
+          <span class="header-phone-label">Freephone — call now</span>
+          <span class="header-phone-number">{site.phone}</span>
+        </span>
+      </a>
+      <a href={site.phoneHref} class="header-call-mobile" aria-label={`Call ${site.phone}`}>
+        <Icon name="telephone" />
+      </a>
+      <button
+        class="nav-toggle"
+        type="button"
+        data-nav-toggle
+        aria-controls="navbar"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
-    <div class="d-md-none">
-        <a href="tel:08007311260" class="btn btn-lg btn-danger"><i class="bi bi-telephone-fill"></i></a>
-    </div>
+  </div>
 </header>
 
-<nav>
-    <div class="container">
-        <button class="navbar-toggler mx-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        <div class="collapse navbar-collapse" id="navbar">
-            <ul class="navbar-nav fw-bold">
-                <!-- Mobile Tyres -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        { tyreDropdown['title'] }
-                    </a>
-                    <ul class="dropdown-menu">
-                        { tyreDropdown.subPages.map(page => <li><a href={`/${tyreDropdown.slug}/${page.slug}`} class="dropdown-item">{page.title}</a></li>) }
-                    </ul>
-                </li>
-                <!-- Services -->
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        { servicesDropdown['title'] }
-                    </a>
-                    <ul class="dropdown-menu">
-                        { servicesDropdown.subPages.map(page => <li><a href={`/${servicesDropdown.slug}/${page.slug}`} class="dropdown-item">{page.title}</a></li>)}
-                    </ul>
-                </li>
-                <!-- Coverage -->
-                <li class="nav-item dropdown">
-                    <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="nav-link dropdown-toggle">
-                        { coverageDropdown['title'] }
-                    </a>
-                    <ul class="dropdown-menu">
-                        { coverageDropdown.subPages.map(page => <li><a href={`/${coverageDropdown.slug}/${page.slug}`} class="dropdown-item">{page.title}</a></li>) }
-                    </ul>
-                </li>
-                <!-- About -->
-                <li class="nav-item">
-                    <a class="nav-link" href="/about">About</a>
-                </li>
-                <!-- Contact -->
-                <li class="nav-item">
-                    <a href="/contact" class="nav-link">Contact</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<style>
+  /* Top utility bar */
+  .topbar {
+    background: var(--color-ink-950);
+    color: var(--color-ink-300);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+  }
+
+  .topbar-inner {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-6);
+    padding-block: var(--space-2);
+  }
+
+  .topbar-item {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .topbar-item > :global(svg) {
+    width: 1rem;
+    height: 1rem;
+    color: var(--color-red-400);
+  }
+
+  .topbar-rating {
+    color: var(--color-white);
+  }
+
+  .topbar-rating .stars {
+    font-size: 0.85rem;
+  }
+
+  .topbar-item:not(.topbar-rating) {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .topbar-inner {
+      justify-content: space-between;
+    }
+
+    .topbar-item:not(.topbar-rating) {
+      display: inline-flex;
+    }
+
+    .topbar-areas {
+      display: none !important;
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .topbar-areas {
+      display: inline-flex !important;
+    }
+  }
+
+  /* Header */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--color-border);
+    transition: box-shadow var(--duration-base) var(--ease-out);
+  }
+
+  .site-header:global(.is-scrolled) {
+    box-shadow: var(--shadow-md);
+  }
+
+  .header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    min-height: var(--header-height);
+  }
+
+  .brand {
+    flex-shrink: 0;
+  }
+
+  .brand img {
+    height: 40px;
+    width: auto;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .header-phone {
+    display: none;
+  }
+
+  .header-call-mobile {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-red-500);
+    color: var(--color-white);
+    box-shadow: var(--shadow-red);
+  }
+
+  .header-call-mobile :global(svg) {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .nav-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    background: var(--color-white);
+    cursor: pointer;
+  }
+
+  .nav-toggle span {
+    display: block;
+    height: 2px;
+    margin-inline: 12px;
+    border-radius: 2px;
+    background: var(--color-ink-950);
+    transition: transform var(--duration-fast) var(--ease-out), opacity var(--duration-fast);
+  }
+
+  .nav-toggle:global(.is-open) span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .nav-toggle:global(.is-open) span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-toggle:global(.is-open) span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Mobile nav drawer */
+  .site-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: calc(100dvh - var(--nav-offset, var(--header-height)));
+    pointer-events: none;
+  }
+
+  .nav-list {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-4) var(--space-4) var(--space-7);
+    height: 100%;
+    overflow-y: auto;
+    background: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(-8px);
+    visibility: hidden;
+    transition: opacity var(--duration-base) var(--ease-out),
+      transform var(--duration-base) var(--ease-out), visibility var(--duration-base);
+  }
+
+  .nav-list:global(.is-open) {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .nav-item {
+    border-bottom: 1px solid var(--color-ink-100);
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-2);
+    background: none;
+    border: 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--color-ink-950);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color var(--duration-fast);
+  }
+
+  .nav-link:hover,
+  .nav-link.is-current {
+    color: var(--color-accent);
+  }
+
+  .nav-link :global(.nav-chevron) {
+    width: 1.1em;
+    height: 1.1em;
+    flex-shrink: 0;
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  [data-dropdown]:global(.is-open) :global(.nav-chevron) {
+    transform: rotate(180deg);
+  }
+
+  .dropdown-menu {
+    display: none;
+    padding: 0 0 var(--space-3);
+  }
+
+  [data-dropdown]:global(.is-open) .dropdown-menu {
+    display: block;
+  }
+
+  .dropdown-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+  }
+
+  .dropdown-menu a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    color: var(--color-ink-700);
+    text-decoration: none;
+    transition: background-color var(--duration-fast), color var(--duration-fast);
+  }
+
+  .dropdown-menu a:hover,
+  .dropdown-menu a[aria-current="page"] {
+    background: var(--color-red-50);
+    color: var(--color-accent);
+  }
+
+  .dropdown-menu :global(.dropdown-arrow) {
+    width: 1rem;
+    height: 1rem;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity var(--duration-fast), transform var(--duration-fast) var(--ease-out);
+  }
+
+  .dropdown-menu a:hover :global(.dropdown-arrow) {
+    opacity: 1;
+    transform: none;
+  }
+
+  .nav-mobile-cta {
+    border: 0;
+    padding-top: var(--space-6);
+    text-align: center;
+  }
+
+  .nav-mobile-cta p {
+    margin: var(--space-3) 0 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  @media (min-width: 1080px) {
+    .header-call-mobile,
+    .nav-toggle,
+    .nav-mobile-cta {
+      display: none;
+    }
+
+    .header-phone {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      text-decoration: none;
+    }
+
+    .site-nav {
+      position: static;
+      height: auto;
+      pointer-events: auto;
+    }
+
+    .nav-list {
+      flex-direction: row;
+      align-items: center;
+      gap: var(--space-1);
+      padding: 0;
+      height: auto;
+      overflow: visible;
+      background: none;
+      opacity: 1;
+      transform: none;
+      visibility: visible;
+    }
+
+    .nav-item {
+      position: relative;
+      border: 0;
+    }
+
+    .nav-link {
+      width: auto;
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-pill);
+      font-size: var(--font-size-base);
+      font-weight: 650;
+    }
+
+    .nav-link:hover {
+      background: var(--color-ink-50);
+      color: var(--color-ink-950);
+    }
+
+    .nav-link.is-current {
+      color: var(--color-accent);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      min-width: 300px;
+      padding: var(--space-2);
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      transform: translateX(-50%);
+    }
+
+    .dropdown-menu::before {
+      content: "";
+      position: absolute;
+      inset: -12px 0 auto;
+      height: 12px;
+    }
+
+    .dropdown-menu--wide {
+      min-width: 440px;
+    }
+
+    .dropdown-menu--wide ul {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .dropdown-menu a {
+      font-size: var(--font-size-sm);
+    }
+  }
+
+  @media (min-width: 1080px) and (hover: hover) {
+    [data-dropdown]:hover .dropdown-menu,
+    [data-dropdown]:focus-within .dropdown-menu {
+      display: block;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .header-phone-label {
+      display: block;
+    }
+  }
+
+  .header-phone-icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--color-red-50);
+    color: var(--color-accent);
+  }
+
+  .header-phone-icon :global(svg) {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .header-phone-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+  }
+
+  .header-phone-label {
+    display: none;
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
+
+  .header-phone-number {
+    font-family: var(--font-display);
+    font-size: var(--font-size-lg);
+    font-weight: 800;
+    color: var(--color-ink-950);
+    white-space: nowrap;
+  }
+
+  .header-phone:hover .header-phone-number {
+    color: var(--color-accent);
+  }
+</style>

@@ -1,13 +1,26 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Heading from "../components/Heading.astro";
+import TrustBar from "../components/TrustBar.astro";
+import ServiceGrid from "../components/ServiceGrid.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { heroImages } from "../data/images";
 ---
 
 <BaseLayout title="About" description="Freeway Mobile Tyres is one the UK's first mobile tyre fitting services. Freeway Mobile Tyres is based in Poole and has been in the tyre trade for over 30 years.">
-  <Heading text="About" />
-  <div class="container">
-    <h2>Our Mission</h2>
-    <p>
+  <Heading
+    text="A family business bringing the tyre shop to your door"
+    eyebrow="About us"
+    intro="Based in Poole, Freeway Mobile Tyres has been in the tyre trade for over 30 years."
+  />
+  <TrustBar />
+
+  <section class="section">
+    <div class="container about-split">
+      <div class="prose">
+        <h2>Our Mission</h2>
+        <p>
       At Freeway Mobile Tyres, we understand that your time is valuable, and
       that's why we're dedicated to providing a mobile tyre-fitting service
       that's as convenient and flexible as possible. Our mission is to make your
@@ -26,9 +39,23 @@ import Heading from "../components/Heading.astro";
       and fit your new tyres while you put your feet up, so you can relax and
       enjoy your day.
     </p>
+      </div>
+      <figure class="about-figure">
+        <Image
+          src={heroImages["about-us"]}
+          alt="Aerial view of the Freeway Mobile Tyres depot in Poole, with the team and fleet of vans"
+          widths={[480, 720, 960]}
+          sizes="(min-width: 992px) 520px, 100vw"
+        />
+      </figure>
+    </div>
+  </section>
 
-    <h2>Our Values</h2>
-    <p>
+  <section class="section section--surface">
+    <div class="container about-cards">
+      <div class="about-card prose">
+        <h2>Our Values</h2>
+        <p>
       At Freeway Mobile Tyres, we're proud to be a small family-owned and
       operated business. We take great pride in providing the best quality tyre
       service to our customers, and we always go above and beyond to ensure your
@@ -40,9 +67,38 @@ import Heading from "../components/Heading.astro";
       area. Our commitment to providing the best service possible is reflected
       in the quality of our work and the loyalty of our customers.
     </p>
-
-    <h2>Our History</h2>
+      </div>
+      <div class="about-card prose">
+        <h2>Our Future</h2>
+        <p>
+      At Freeway Mobile Tyres, we're always looking to expand our services and
+      provide our mobile tyre service to all Dorset residents. That's why we
+      currently have eight mobile tyre-fitting vans on the road, each equipped
+      with the latest technology and tools to ensure your safety and
+      satisfaction.
+    </p>
     <p>
+      In addition, we've recently opened our new depot in Shaftesbury, which
+      enables us to better serve customers in that area. We're constantly
+      investing in new technology and expanding our reach, so that we can
+      continue to provide the best possible service to our customers throughout
+      the region.
+    </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container about-history">
+      <div class="about-year" aria-hidden="true">
+        <div>
+          <span>Est.</span>
+          <strong>1990</strong>
+        </div>
+      </div>
+      <div class="prose">
+        <h2>Our History</h2>
+        <p>
       While Freeway Mobile Tyres was only established in the last few years, our
       team has been in the tyre trade for over 30 years. Our founder, Paul
       Spicer, started Mobile Tyres in August 1990, one of the UK's first mobile
@@ -63,21 +119,128 @@ import Heading from "../components/Heading.astro";
       excellent service and innovative solutions, even as we look towards the
       future.
     </p>
+      </div>
+    </div>
+  </section>
 
-    <h2>Our Future</h2>
-    <p>
-      At Freeway Mobile Tyres, we're always looking to expand our services and
-      provide our mobile tyre service to all Dorset residents. That's why we
-      currently have eight mobile tyre-fitting vans on the road, each equipped
-      with the latest technology and tools to ensure your safety and
-      satisfaction.
-    </p>
-    <p class="mb-5">
-      In addition, we've recently opened our new depot in Shaftesbury, which
-      enables us to better serve customers in that area. We're constantly
-      investing in new technology and expanding our reach, so that we can
-      continue to provide the best possible service to our customers throughout
-      the region.
-    </p>
-  </div>
+  <ServiceGrid heading="What we can do for you" />
+  <div class="section-spacer"></div>
+  <CtaBand quoteHref="/#quoteForm" />
 </BaseLayout>
+
+<style>
+  .about-split {
+    display: grid;
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  @media (min-width: 992px) {
+    .about-split {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: var(--space-8);
+    }
+  }
+
+  .about-figure {
+    position: relative;
+  }
+
+  .about-figure::before {
+    content: "";
+    position: absolute;
+    inset: var(--space-5) calc(var(--space-5) * -1) calc(var(--space-5) * -1) var(--space-5);
+    border-radius: var(--radius-xl);
+    background: var(--color-red-500);
+    z-index: -1;
+  }
+
+  .about-figure :global(img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .about-cards {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 900px) {
+    .about-cards {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .about-card {
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+  }
+
+  .about-card p:last-child {
+    margin-bottom: 0;
+  }
+
+  .about-history {
+    display: grid;
+    gap: var(--space-6);
+    max-width: 980px;
+  }
+
+  @media (min-width: 860px) {
+    .about-history {
+      grid-template-columns: 220px 1fr;
+      gap: var(--space-8);
+    }
+  }
+
+  .about-year {
+    align-self: start;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    max-width: 220px;
+    border-radius: 50%;
+    background: var(--color-ink-950);
+    color: var(--color-white);
+    text-align: center;
+    box-shadow: inset 0 0 0 10px var(--color-ink-800), inset 0 0 0 12px var(--color-red-500);
+  }
+
+  .about-year span {
+    display: block;
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-ink-400);
+  }
+
+  .about-year strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  @media (max-width: 859px) {
+    .about-year {
+      width: 160px;
+    }
+
+    .about-year strong {
+      font-size: 2.5rem;
+    }
+  }
+
+  .section-spacer {
+    height: var(--section-y);
+  }
+</style>

@@ -1,0 +1,81 @@
+:root {
+  /* Brand — pulled from the logo: road-sign red + asphalt charcoal */
+  --color-red-700: #8e1218;
+  --color-red-600: #a8161d;
+  --color-red-500: #d01f27;
+  --color-red-400: #e5484f;
+  --color-red-100: #fde3e4;
+  --color-red-50: #fff3f3;
+
+  --color-ink-950: #0b0d10;
+  --color-ink-900: #121418;
+  --color-ink-800: #1b1e24;
+  --color-ink-700: #2a2e36;
+  --color-ink-600: #3d434e;
+  --color-ink-500: #5b6270;
+  --color-ink-400: #8a909c;
+  --color-ink-300: #b9bec8;
+  --color-ink-200: #dfe2e7;
+  --color-ink-100: #eef0f3;
+  --color-ink-50: #f6f7f9;
+
+  --color-white: #ffffff;
+  --color-star: #fbbc04;
+  --color-success: #1f9d55;
+
+  /* Semantic */
+  --color-bg: var(--color-white);
+  --color-surface: var(--color-ink-50);
+  --color-text: var(--color-ink-900);
+  --color-text-muted: var(--color-ink-500);
+  --color-border: var(--color-ink-200);
+  --color-accent: var(--color-red-500);
+  --color-accent-hover: var(--color-red-600);
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --section-y: clamp(3.5rem, 2rem + 5vw, 6.5rem);
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* Depth — soft, layered shadows */
+  --shadow-sm: 0 1px 2px rgba(11, 13, 16, 0.06), 0 1px 3px rgba(11, 13, 16, 0.08);
+  --shadow-md: 0 4px 12px rgba(11, 13, 16, 0.08), 0 2px 4px rgba(11, 13, 16, 0.05);
+  --shadow-lg: 0 24px 48px -12px rgba(11, 13, 16, 0.25);
+  --shadow-red: 0 10px 24px -8px rgba(208, 31, 39, 0.55);
+
+  /* Type */
+  --font-display: "Archivo Variable", "Archivo", system-ui, sans-serif;
+  --font-body: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-size-xs: 0.8125rem;
+  --font-size-sm: 0.9375rem;
+  --font-size-base: 1.0625rem;
+  --font-size-lg: 1.1875rem;
+  --font-size-xl: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  --font-size-2xl: clamp(1.75rem, 1.35rem + 1.6vw, 2.625rem);
+  --font-size-3xl: clamp(2.25rem, 1.5rem + 3vw, 3.5rem);
+  --font-size-display: clamp(2.6rem, 1.6rem + 4.4vw, 5rem);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+
+  /* Layout */
+  --container-max: 1240px;
+  --header-height: 76px;
+}

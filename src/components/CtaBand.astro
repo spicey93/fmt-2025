@@ -1,0 +1,119 @@
+---
+import Icon from "./Icon.astro";
+import { site } from "../data/site";
+
+interface Props {
+  heading?: string;
+  text?: string;
+  quoteHref?: string;
+}
+
+const {
+  heading = "Flat tyre? Let's get you moving.",
+  text = "Call free now and one of our technicians can be with you today — at home, at work or at the roadside.",
+  quoteHref = "#quoteForm",
+} = Astro.props;
+---
+
+<section class="cta">
+  <div class="container">
+    <div class="cta-card">
+      <div class="cta-copy">
+        <h2>{heading}</h2>
+        <p>{text}</p>
+      </div>
+      <div class="cta-actions">
+        <a href={site.phoneHref} class="btn btn-light btn-lg">
+          <Icon name="telephone" /> {site.phone}
+        </a>
+        <a href={quoteHref} class="btn btn-outline btn-lg">
+          Get a free quote <Icon name="arrow-right" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    padding-bottom: var(--section-y);
+  }
+
+  .cta-card {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    gap: var(--space-6);
+    padding: var(--space-7) var(--space-5);
+    border-radius: var(--radius-xl);
+    background:
+      radial-gradient(ellipse 70% 120% at 100% 100%, rgba(11, 13, 16, 0.4), transparent 60%),
+      radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.15), transparent 45%),
+      var(--color-red-500);
+    color: var(--color-white);
+  }
+
+  /* Faint tread pattern in the corner */
+  .cta-card::after {
+    content: "";
+    position: absolute;
+    right: -60px;
+    top: -60px;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    border: 36px solid rgba(255, 255, 255, 0.07);
+    pointer-events: none;
+  }
+
+  @media (min-width: 640px) {
+    .cta-card {
+      padding: var(--space-8) var(--space-7);
+    }
+  }
+
+  @media (min-width: 992px) {
+    .cta-card {
+      grid-template-columns: 1.3fr auto;
+      align-items: center;
+      padding: var(--space-8);
+    }
+  }
+
+  .cta-copy h2 {
+    color: var(--color-white);
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--space-3);
+  }
+
+  .cta-copy p {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    color: rgba(255, 255, 255, 0.88);
+    max-width: 36rem;
+  }
+
+  .cta-actions {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  @media (max-width: 479px) {
+    .cta-actions .btn {
+      flex: 1 1 100%;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .cta-actions {
+      flex-direction: column;
+    }
+  }
+
+  .cta .btn-outline {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+</style>

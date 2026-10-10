@@ -1,51 +1,101 @@
 ---
+import type { ImageMetadata } from "astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import Aside from "../components/Aside.astro";
+import TrustBar from "../components/TrustBar.astro";
+import HowItWorks from "../components/HowItWorks.astro";
+import ServiceGrid from "../components/ServiceGrid.astro";
+import CoverageAreas from "../components/CoverageAreas.astro";
+import CtaBand from "../components/CtaBand.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  heroHeading: string;
+  heroSubheading: string;
+  heroImage: ImageMetadata;
+  heroImageAlt: string;
+  mainHeading: string;
+  service?: { name: string; description: string };
+}
 
 const {
   title,
   description,
   heroHeading,
   heroSubheading,
-  heroBgImg,
+  heroImage,
+  heroImageAlt,
   mainHeading,
+  service,
 } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} service={service} image={heroImage.src}>
   <Hero
     heroHeading={heroHeading}
     heroSubheading={heroSubheading}
-    heroBgImg={heroBgImg}
+    heroImage={heroImage}
+    heroImageAlt={heroImageAlt}
   />
-    <!-- Elfsight Google Reviews -->
-    <section class="py-3 container">
-      <div
-        class="elfsight-app-fb7d1eca-cfda-467a-8de2-483ded2a6bdd"
-        data-elfsight-app-lazy
-      >
-      </div>
-    </section>
-  <div class="py-5 container">
-    <div class="row g-5">
-      <main class="col-12 col-lg-8 text-center text-lg-start">
-        <h1 class="mb-3">{mainHeading}</h1>
+  <TrustBar />
+
+  <section class="section">
+    <div class="container content-grid">
+      <article class="prose content-main">
+        <p class="eyebrow">Freeway Mobile Tyres</p>
+        <h2 class="main-heading">{mainHeading}</h2>
         <slot />
-      </main>
+      </article>
       <Aside />
     </div>
-  </div>
-  
+  </section>
 
-
-  <!-- CTA -->
-  <div class="bg-danger py-5 text-center text-white">
+  <!-- Google Reviews -->
+  <section class="section section--surface reviews">
     <div class="container">
-      <h2 class="mb-3">Call Now For a Quote</h2>
-      <a href="tel:08007311260" class="btn btn-light btn-lg fw-bold wiggle"
-        ><i class="bi bi-telephone-fill"></i> 0800 7311 260</a
-      >
+      <div class="section-head section-head--center">
+        <p class="eyebrow">Reviews</p>
+        <h2>Trusted by drivers across Dorset</h2>
+      </div>
+      <div class="reviews-widget" data-elfsight-lazy>
+        <div class="elfsight-app-fb7d1eca-cfda-467a-8de2-483ded2a6bdd"></div>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <HowItWorks />
+  <ServiceGrid />
+  <CoverageAreas />
+  <CtaBand />
 </BaseLayout>
+
+<style>
+  .content-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  @media (min-width: 992px) {
+    .content-grid {
+      grid-template-columns: minmax(0, 1fr) 360px;
+    }
+  }
+
+  .main-heading {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--space-5);
+  }
+
+  .main-heading + :global(p) {
+    font-size: var(--font-size-lg);
+    color: var(--color-ink-800);
+  }
+
+  .reviews-widget {
+    min-height: 240px;
+  }
+</style>

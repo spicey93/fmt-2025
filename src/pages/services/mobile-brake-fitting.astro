@@ -1,9 +1,9 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
+import { heroImages } from "../../data/images";
 
 const title = "Mobile Brake Fitting | Freeway Mobile Tyres"
 const description = "Have your brake pads and discs fitted the easy way! Our expert technicians will come to you at home or work."
-const heroBgImg = "url(/img/services/mobile-brake-fitting.webp)"
 const heroHeading = "Mobile Brake Fitting"
 const heroSubheading = "We Can Replace Your Brake Discs & Pads At Home!"
 const mainHeading = "Mobile Brake Pad Replacement"
@@ -14,8 +14,10 @@ const mainHeading = "Mobile Brake Pad Replacement"
   description={description}
   heroHeading={heroHeading}
   heroSubheading={heroSubheading}
-  heroBgImg={heroBgImg}
+  heroImage={heroImages["mobile-brake-fitting"]}
+  heroImageAlt="A technician replacing a car's brake pads on a driveway"
   mainHeading={mainHeading}
+  service={{ name: "Mobile Brake Fitting", description }}
 >
 <p>Change your brake pads the easy way with our mobile brake fitting service! Our technicians can come to you at home or work and replace your old brakes today. </p>
 <p>Your tyres and brakes are the most important components of your vehicle, so it’s vital they are in good condition. The moment you start hearing brake squeal or grinding, it’s time to change your car brakes. </p>

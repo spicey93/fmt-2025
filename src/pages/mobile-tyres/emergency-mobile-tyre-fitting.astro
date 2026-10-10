@@ -1,11 +1,11 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
+import { heroImages } from "../../data/images";
 const title = "Emergency Mobile Tyre Fitting"
 const description = "We provide an emergency mobile tyre fitting service across many areas of Dorset. Our fitters will come to you at home or roadside in 60 minutes."
-const heroBgImg = "url(/img/services/emergency-mobile-tyre-fitting.webp)"
 const heroHeading = "Emergency Mobile Tyre Fitting"
 const heroSubheading = "Stuck With A Flat Tyre? We'll Get You Back On The Road In 60 Minutes"
-const mainHeading = "Emergency Mobile Tyre Fitting"
+const mainHeading = "24/7 Emergency Tyre Fitting"
 ---
 
 <MainLayout
@@ -13,8 +13,10 @@ const mainHeading = "Emergency Mobile Tyre Fitting"
   description={description}
   heroHeading={heroHeading}
   heroSubheading={heroSubheading}
-  heroBgImg={heroBgImg}
+  heroImage={heroImages["emergency-mobile-tyre-fitting"]}
+  heroImageAlt="A Freeway Mobile Tyres emergency callout technician fitting a replacement tyre roadside"
   mainHeading={mainHeading}
+  service={{ name: "Emergency Mobile Tyre Fitting", description }}
 >
 <p>When a flat tyre strikes at the worst possible moment, <strong>Freeway Mobile Tyres</strong> is here to help. Our roadside tyre service provides an <strong>out-of-hours call out mobile tyre fitting</strong> across many areas of Dorset. Our goal is to get you back on the road as quickly as possible, and in most cases, we can arrive at your location in less than 60 minutes.</p>
     <h2>Our Emergency Tyre Fitting Service</h2>

@@ -1,0 +1,101 @@
+---
+import Icon from "./Icon.astro";
+import type { IconName } from "./Icon.astro";
+import { site } from "../data/site";
+
+const years = new Date().getFullYear() - site.established;
+
+const items: { icon: IconName; value: string; label: string }[] = [
+  { icon: "clock", value: "< 60 min", label: "Average emergency arrival" },
+  { icon: "calendar-check", value: "7 days", label: "Open every day of the week" },
+  { icon: "award", value: `${years} yrs`, label: `Fitting tyres since ${site.established}` },
+  { icon: "star", value: `${site.rating}/5`, label: `From ${site.reviewCount} Google reviews` },
+];
+---
+
+<section class="trust" aria-label="Why choose Freeway Mobile Tyres">
+  <div class="container">
+    <ul class="trust-grid">
+      {
+        items.map((item) => (
+          <li class="trust-item">
+            <span class="trust-icon">
+              <Icon name={item.icon} />
+            </span>
+            <span>
+              <strong>{item.value}</strong>
+              <span class="trust-label">{item.label}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .trust {
+    background: var(--color-white);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .trust-grid {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-5) 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5) var(--space-4);
+  }
+
+  @media (min-width: 900px) {
+    .trust-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      padding-block: var(--space-6);
+    }
+
+    .trust-item + .trust-item {
+      border-left: 1px solid var(--color-border);
+      padding-left: var(--space-5);
+    }
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .trust-icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: var(--radius-md);
+    background: var(--color-red-50);
+    color: var(--color-accent);
+  }
+
+  .trust-icon :global(svg) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .trust-item strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--color-ink-950);
+  }
+
+  .trust-label {
+    display: block;
+    font-size: var(--font-size-xs);
+    line-height: 1.35;
+    color: var(--color-text-muted);
+  }
+</style>

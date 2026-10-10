@@ -1,9 +1,9 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
+import { heroImages } from "../../data/images";
 
 const title = "Tyre Pressure Monitoring System"
 const description = "We can replace faulty TPMS sensors at your location. Our technicians can programme TPMS for all car makes & models."
-const heroBgImg = "url(/img/services/tyre-pressure-monitoring-system.webp)"
 const heroHeading = "Tyre Pressure Monitoring System"
 const heroSubheading = "We Programme & Install New Tyre Sensors"
 const mainHeading = "Your Local TPMS Specialists In Dorset"
@@ -14,8 +14,10 @@ const mainHeading = "Your Local TPMS Specialists In Dorset"
   description={description}
   heroHeading={heroHeading}
   heroSubheading={heroSubheading}
-  heroBgImg={heroBgImg}
+  heroImage={heroImages["tyre-pressure-monitoring-system"]}
+  heroImageAlt="A technician programming a tyre pressure monitoring sensor"
   mainHeading={mainHeading}
+  service={{ name: "Tyre Pressure Monitoring System", description }}
 >
 <p>Since late 2014, all new cars must have a tyre pressure monitoring system (TPMS) built into the vehicle. The TPMS sensors are designed to keep track of your tyre pressures and alert you with a warning on your dashboard when the pressure drops.</p>
     <p>However, these tyre pressure sensors have a life span of six to eight years, meaning that you will need to replace your tyre sensors from time to time.</p>

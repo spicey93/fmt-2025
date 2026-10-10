@@ -1,0 +1,81 @@
+---
+import { coverageDropdown } from "../data/nav";
+import { site } from "../data/site";
+
+interface Props {
+  service?: {
+    name: string;
+    description: string;
+  };
+}
+
+const { service } = Astro.props;
+
+const siteUrl = "https://freewaymobiletyres.co.uk";
+
+const localBusiness = {
+  "@context": "https://schema.org",
+  "@type": "AutoRepair",
+  name: "Freeway Mobile Tyres",
+  image: `${siteUrl}/img/logos/color-logo-no-background.webp`,
+  url: siteUrl,
+  telephone: "+448007311260",
+  email: "freewaytyre@btconnect.com",
+  priceRange: "££",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "31A Banbury Road, Nuffield Industrial Estate",
+    addressLocality: "Poole",
+    addressRegion: "Dorset",
+    postalCode: "BH17 0GA",
+    addressCountry: "GB",
+  },
+  areaServed: coverageDropdown.subPages.map((page) => page.title),
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: site.rating,
+    reviewCount: site.reviewCount,
+  },
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ],
+    opens: "07:00",
+    closes: "22:00",
+  },
+  sameAs: [
+    "https://www.facebook.com/dorsetmobiletyres",
+    "https://www.youtube.com/channel/UCqDgLASKb7vnOSo4t_bdV1Q",
+  ],
+};
+
+const serviceSchema = service
+  ? {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      serviceType: service.name,
+      name: service.name,
+      description: service.description,
+      provider: {
+        "@type": "AutoRepair",
+        name: "Freeway Mobile Tyres",
+        telephone: "+448007311260",
+      },
+      areaServed: coverageDropdown.subPages.map((page) => page.title),
+    }
+  : null;
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
+{
+  serviceSchema && (
+    <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  )
+}

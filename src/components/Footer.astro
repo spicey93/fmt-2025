@@ -1,142 +1,279 @@
 ---
-const mobileTyresUrl = "/mobile-tyres/";
-const servicesUrl = "/services/"
+import { tyreDropdown, servicesDropdown, coverageDropdown } from "../data/nav";
+import { site } from "../data/site";
+import Icon from "./Icon.astro";
 
-const mobileTyresPages = [
-    {slug: "mobile-tyre-fitting", title:"Mobile Tyre Fitting"}, 
-    {slug: "emergency-mobile-tyre-fitting", title: "Emergency Mobile Tyre Fitting"},
-    {slug: "mobile-caravan-tyre-fitting", title: "Mobile Caravan Tyre Fitting"},
-    {slug: "puncture-repair", title: "Puncture Repair"},
-    ]
-
-const servicesPages = [
-    {slug: "locking-wheel-nut-removal", title: "Locking Wheel Nut Removal"},
-    {slug: "mobile-car-battery-replacement", title: "Mobile Car Battery Replacement"},
-    {slug: "mobile-brake-fitting", title: "Mobile Brake Fitting"},
-    {slug: "tyre-pressure-monitoring-system", title: "Tyre Pressure Monitoring System"},
-    {slug: "alloygator-wheel-protection", title: "Alloygator Wheel Protection"},
-    {slug: "alloy-wheel-repair", title: "Alloy Wheel Repair"},
-]
-
+const year = new Date().getFullYear();
 ---
 
-<!-- Footer -->
-<footer class="mt-auto bg-dark text-white pt-5 pb-3">
-    <div class="container d-grid">
-        <div class="row">
-            <div class="col-12 row pb-4">
-                <div
-                class="col-12 col-lg-3 d-flex justify-content-center justify-content-lg-start align-items-center align-items-lg-start"
-            >
-                    <div>
-                        <a href="/">
-                            <img
-                                src="/img/logos/white-logo-no-background.webp"
-                                alt="Freeway Logo"
-                                class="mb-4 mb-lg-2"
-                                width="200" 
-                                height="52"
-                            />
-                        </a>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-3 text-center text-lg-start">
-                    <p class="fw-bold mb-0 fs-5">Mobile Tyres</p>
-                    <ul class="no-bullet-points">
-                        {mobileTyresPages.map(page => (
-                            <li><a href={`${mobileTyresUrl}${page.slug}`}>{page.title}</a></li>
-                        ))}
-                    </ul>
-                </div>
-                <div class="col-12 col-lg-3 text-center text-lg-start">
-                    <p class="fs-5 mb-0 fw-bold">Services</p>
-                    <ul class="no-bullet-points">
-                        {servicesPages.map(page => (
-                            <li><a href={`${servicesUrl}${page.slug}`}>{page.title}</a></li>
-                        ))}
-                    </ul>
-                </div>
-                <div class="col-12 col-lg-3 text-center text-lg-start">
-                    <div>
-                        <p class="fw-bold mb-0 fs-5">Get In Touch</p>
-                        <p class="fs-4">
-                            <i class="bi bi-telephone-fill"></i>
-                            <span class="fw-bold"
-                                ><a href="tel:08007311260" class="social-link"
-                                    >0800 7311 260</a
-                                ></span
-                            >
-                        </p>
-                    </div>
-                    <div>
-                        <p class="fw-bold mb-0 fs-5">Follow Us</p>
-                        <div
-                            class="d-flex fs-4 justify-content-center justify-content-lg-start"
-                        >
-                            <p>
-                                <a
-                                    href="https://www.facebook.com/dorsetmobiletyres"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="social-link"
-                                    aria-label="Facebook"
-                                    ><i class="bi bi-facebook"></i
-                                ></a>
-                            </p>
-                            <p>
-                                <a
-                                    href="https://www.youtube.com/channel/UCqDgLASKb7vnOSo4t_bdV1Q"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="social-link"
-                                    aria-label="YouTube"
-                                    ><i class="bi mx-3 bi-youtube"></i
-                                ></a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr />
-            <div class="col-12 text-muted text-small">
-                <ul class="d-flex flex-column align-items-center flex-lg-row justify-content-center no-bullet-points">
-                    <li class="mx-3"><a href="/terms-and-conditions">Terms & Conditions</a></li>
-                    <li class="mx-3"><a href="/cookie-policy">Cookie Policy</a></li>
-                    <li class="mx-3"><a href="/privacy-policy">Privacy Policy</a></li>
-                    <li class="mx-3"><a href="/site-map">Site Map</a></li>
-                </ul>
-            </div>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/" aria-label="Freeway Mobile Tyres home">
+          <img
+            src="/img/logos/white-logo-no-background.webp"
+            alt="Freeway Mobile Tyres"
+            width="200"
+            height="52"
+            loading="lazy"
+          />
+        </a>
+        <p class="footer-tagline">
+          Dorset's mobile tyre fitting specialists since {site.established}. We come to you — at home, at work or at
+          the roadside.
+        </p>
+        <a class="footer-phone" href={site.phoneHref}>
+          <span class="footer-phone-icon"><Icon name="telephone" /></span>
+          <span>
+            <span class="footer-phone-label">Freephone, 7 days a week</span>
+            <span class="footer-phone-number">{site.phone}</span>
+          </span>
+        </a>
+        <div class="footer-social">
+          <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <Icon name="facebook" />
+          </a>
+          <a href={site.social.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+            <Icon name="youtube" />
+          </a>
         </div>
+      </div>
+
+      <nav class="footer-col" aria-label={tyreDropdown.title}>
+        <p class="footer-heading">{tyreDropdown.title}</p>
+        <ul>
+          {tyreDropdown.subPages.map((page) => (
+            <li><a href={`/${tyreDropdown.slug}/${page.slug}`}>{page.title}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label={servicesDropdown.title}>
+        <p class="footer-heading">{servicesDropdown.title}</p>
+        <ul>
+          {servicesDropdown.subPages.map((page) => (
+            <li><a href={`/${servicesDropdown.slug}/${page.slug}`}>{page.title}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="footer-col">
+        <p class="footer-heading">Contact</p>
+        <ul class="footer-contact">
+          <li>
+            <Icon name="envelope" />
+            <a href={`mailto:${site.email}`}>{site.email}</a>
+          </li>
+          <li>
+            <Icon name="map" />
+            <span>{site.address}</span>
+          </li>
+          <li>
+            <Icon name="house" />
+            <a href="/about">About us</a>
+          </li>
+        </ul>
+      </div>
     </div>
+
+    <div class="footer-areas">
+      <p class="footer-heading">Areas we cover</p>
+      <ul>
+        {coverageDropdown.subPages.map((page) => (
+          <li><a href={`/${coverageDropdown.slug}/${page.slug}`}>{page.title}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {year} Freeway Mobile Tyres. All rights reserved.</p>
+      <ul class="footer-legal">
+        <li><a href="/terms-and-conditions">Terms &amp; Conditions</a></li>
+        <li><a href="/cookie-policy">Cookie Policy</a></li>
+        <li><a href="/privacy-policy">Privacy Policy</a></li>
+        <li><a href="/site-map">Site Map</a></li>
+      </ul>
+    </div>
+  </div>
 </footer>
 
 <style>
+  .site-footer {
+    background: var(--color-ink-950);
+    color: var(--color-ink-300);
+    padding-top: var(--space-9);
+    font-size: var(--font-size-sm);
+  }
 
-    footer li a {
-        color: white;
-        text-decoration: none;
-    }
+  .site-footer a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--duration-fast);
+  }
 
-    footer li a:hover {
-        color: #dc3545;
-    }
+  .site-footer a:hover {
+    color: var(--color-white);
+  }
 
-    .social-link {
-        color: white;
-        text-decoration: none;
-    }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+    padding-bottom: var(--space-7);
+  }
 
-    .social-link:hover {
-        color: #dc3545;
+  @media (min-width: 700px) {
+    .footer-top {
+      grid-template-columns: 1fr 1fr;
     }
+  }
 
-    .no-bullet-points {
-        list-style: none;
-        padding-left: 0px;
+  @media (min-width: 1080px) {
+    .footer-top {
+      grid-template-columns: 1.5fr 1fr 1fr 1.1fr;
     }
+  }
 
-    .service a {
-        color: black;
-        text-decoration: none;
-    }
+  .footer-brand img {
+    height: 40px;
+    width: auto;
+  }
+
+  .footer-tagline {
+    margin: var(--space-4) 0 var(--space-5);
+    max-width: 22rem;
+    line-height: 1.6;
+  }
+
+  .footer-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .footer-phone-icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-red-500);
+    color: var(--color-white);
+  }
+
+  .footer-phone-icon :global(svg) {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .footer-phone-label {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-ink-400);
+  }
+
+  .footer-phone-number {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--font-size-xl);
+    font-weight: 800;
+    color: var(--color-white);
+    line-height: 1.2;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-5);
+  }
+
+  .footer-social a {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-ink-800);
+    color: var(--color-ink-200);
+    transition: background-color var(--duration-fast), color var(--duration-fast);
+  }
+
+  .footer-social a:hover {
+    background: var(--color-red-500);
+  }
+
+  .footer-social :global(svg) {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .footer-heading {
+    margin-bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    color: var(--color-white);
+  }
+
+  .footer-col ul,
+  .footer-areas ul,
+  .footer-legal {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-col ul {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .footer-contact li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    word-break: break-word;
+  }
+
+  .footer-contact :global(svg) {
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+    color: var(--color-red-400);
+  }
+
+  .footer-areas {
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--color-ink-800);
+  }
+
+  .footer-areas ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+  }
+
+  .footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3) var(--space-5);
+    padding-block: var(--space-5);
+    border-top: 1px solid var(--color-ink-800);
+    font-size: var(--font-size-xs);
+    color: var(--color-ink-400);
+  }
+
+  .footer-bottom p {
+    margin: 0;
+  }
+
+  .footer-legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+  }
 </style>

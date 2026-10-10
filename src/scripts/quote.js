@@ -9,12 +9,37 @@ const steps = [
 ];
 
 let currentStep = 0;
-let isTyreFlow = false;
+// Assume the tyre flow until a service is chosen, so the step count starts at the longest path
+let isTyreFlow = true;
+
+const errorEl = document.querySelector("[data-quote-error]");
+const stepEl = document.querySelector("[data-quote-step]");
+const totalEl = document.querySelector("[data-quote-total]");
+const progressEl = document.querySelector("[data-quote-progress]");
+
+// Non-tyre services skip the tyre size and quantity steps
+const visibleSteps = () =>
+  isTyreFlow ? steps : steps.filter((id) => id !== "tyreSizeDiv" && id !== "quantityDiv");
+
+const showError = (message) => {
+  if (!errorEl) return alert(message);
+  errorEl.textContent = message;
+  errorEl.classList.remove("d-none");
+};
+
+const clearError = () => errorEl?.classList.add("d-none");
 
 const showStep = (index) => {
+  clearError();
   steps.forEach((id, i) => {
     document.getElementById(id).classList.toggle("d-none", i !== index);
   });
+
+  const flow = visibleSteps();
+  const position = Math.max(flow.indexOf(steps[index]), 0) + 1;
+  if (stepEl) stepEl.textContent = String(position);
+  if (totalEl) totalEl.textContent = String(flow.length);
+  if (progressEl) progressEl.style.width = `${(position / flow.length) * 100}%`;
 };
 
 const goToStep = (stepName) => {
@@ -53,7 +78,7 @@ const isFitmentValid = () =>
 // Step: VRM
 document.getElementById("vrmBtn").addEventListener("click", () => {
   if (isVrmValid()) goToStep("serviceDiv");
-  else alert("Please enter a registration.");
+  else showError("Please enter a registration.");
 });
 
 // Step: Service
@@ -61,7 +86,7 @@ document.getElementById("serviceBtn").addEventListener("click", () => {
   const selectedService = document.getElementById("serviceSelect").value;
 
   if (!selectedService) {
-    alert("Please select a service.");
+    showError("Please select a service.");
     return;
   }
 
@@ -80,7 +105,7 @@ document.getElementById("serviceBackBtn").addEventListener("click", () => {
 // Tyre Size
 document.getElementById("tyreSizeBtn").addEventListener("click", () => {
   if (isTyreSizeValid()) goToStep("quantityDiv");
-  else alert("Please select all tyre sizes.");
+  else showError("Please select all tyre sizes.");
 });
 
 document.getElementById("tyreSizeBackBtn").addEventListener("click", () => {
@@ -90,7 +115,7 @@ document.getElementById("tyreSizeBackBtn").addEventListener("click", () => {
 // Quantity
 document.getElementById("quantityBtn").addEventListener("click", () => {
   if (isQuantityValid()) goToStep("locationDiv");
-  else alert("Please select quantity.");
+  else showError("Please select quantity.");
 });
 
 document.getElementById("quantityBackBtn").addEventListener("click", () => {
@@ -100,7 +125,7 @@ document.getElementById("quantityBackBtn").addEventListener("click", () => {
 // Location
 document.getElementById("postcodeBtn").addEventListener("click", () => {
   if (isLocationValid()) goToStep("fitmentDiv");
-  else alert("Please enter a postcode.");
+  else showError("Please enter a postcode.");
 });
 
 document.getElementById("locationBackBtn").addEventListener("click", () => {
@@ -109,11 +134,12 @@ document.getElementById("locationBackBtn").addEventListener("click", () => {
 
 document.getElementById("coordinatesBtn").addEventListener("click", () => {
   if (!navigator.geolocation) {
-    alert("Geolocation is not supported by your browser.");
+    showError("Geolocation is not supported by your browser.");
     return;
   }
 
   const btn = document.getElementById("coordinatesBtn");
+  const btnLabel = btn.innerHTML;
   btn.innerText = "Locating...";
 
   navigator.geolocation.getCurrentPosition(
@@ -134,22 +160,22 @@ document.getElementById("coordinatesBtn").addEventListener("click", () => {
         const postcode = data.address?.postcode;
 
         if (!postcode) {
-          alert("Unable to detect postcode.");
-          btn.innerText = "Share your location";
+          showError("Unable to detect postcode.");
+          btn.innerHTML = btnLabel;
           return;
         }
 
         document.getElementById("postcodeInput").value = postcode;
-        btn.innerText = "Share your location";
+        btn.innerHTML = btnLabel;
         goToStep("fitmentDiv");
       } catch {
-        alert("Error retrieving location.");
-        btn.innerText = "Share your location";
+        showError("Error retrieving location.");
+        btn.innerHTML = btnLabel;
       }
     },
     () => {
-      alert("Location permission denied.");
-      btn.innerText = "Share your location";
+      showError("Location permission denied.");
+      btn.innerHTML = btnLabel;
     }
   );
 });
@@ -157,7 +183,7 @@ document.getElementById("coordinatesBtn").addEventListener("click", () => {
 // Fitment
 document.getElementById("fitmentBtn").addEventListener("click", () => {
   if (isFitmentValid()) goToStep("customerDiv");
-  else alert("Please select a fitment option.");
+  else showError("Please select a fitment option.");
 });
 
 document.getElementById("fitmentBackBtn").addEventListener("click", () => {
@@ -174,7 +200,7 @@ document.getElementById("vrmInput").addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
     if (isVrmValid()) goToStep("serviceDiv");
-    else alert("Please enter a registration.");
+    else showError("Please enter a registration.");
   }
 });
 
@@ -182,7 +208,7 @@ document.getElementById("postcodeInput").addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
     if (isLocationValid()) goToStep("fitmentDiv");
-    else alert("Please enter a postcode.");
+    else showError("Please enter a postcode.");
   }
 });
 

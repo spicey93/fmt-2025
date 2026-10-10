@@ -1,12 +1,22 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import StatusPanel from "../components/StatusPanel.astro";
+import Icon from "../components/Icon.astro";
+import { site } from "../data/site";
 ---
 
-<BaseLayout title="Thanks" description="Thank you page.">
-    <div class="container py-5">
-        <h1 class="mb-3">Thank You</h1>
-        <p>We have received your quote request.</p>
-        <p>A member of our team will get in touch with you as quickly as possible.</p>
-        <p class="fs-5"><strong>In the case of an emergency, please call <a href="tel:08007311260" class="link-danger">0800 7311 260</a> for urgent assistance.</strong></p>
-    </div>
-  </BaseLayout>
+<BaseLayout title="Thank You" description="Thank you for your quote request — we'll be in touch shortly.">
+  <StatusPanel icon="check-circle" heading="Thank you">
+    <p>We have received your quote request.</p>
+    <p>A member of our team will get in touch with you as quickly as possible.</p>
+    <p class="status-emergency">In the case of an emergency, please call us for urgent assistance.</p>
+    <a href={site.phoneHref} class="btn btn-primary btn-lg"><Icon name="telephone" /> {site.phone}</a>
+  </StatusPanel>
+</BaseLayout>
+
+<style>
+  .status-emergency {
+    font-weight: 600;
+    color: var(--color-ink-900) !important;
+  }
+</style>

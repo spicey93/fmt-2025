@@ -1,0 +1,183 @@
+---
+import { Image } from "astro:assets";
+import Icon from "./Icon.astro";
+import { services } from "../data/services";
+import { heroImages } from "../data/images";
+
+interface Props {
+  heading?: string;
+  intro?: string;
+  limit?: number;
+}
+
+const {
+  heading = "Everything your wheels need, at your door",
+  intro = "From brand-new tyres to flat batteries, our fully-equipped vans carry what's needed to fix it on the spot.",
+  limit = 6,
+} = Astro.props;
+
+const currentPath = Astro.url.pathname.replace(/\/$/, "");
+const cards = services.filter((service) => service.href !== currentPath).slice(0, limit);
+---
+
+<section class="section section--surface">
+  <div class="container">
+    <div class="services-head">
+      <div class="section-head">
+        <p class="eyebrow">Our services</p>
+        <h2>{heading}</h2>
+        <p>{intro}</p>
+      </div>
+      <a class="btn btn-outline-dark" href="/site-map">View all services <Icon name="arrow-right" /></a>
+    </div>
+
+    <ul class="services-grid">
+      {
+        cards.map((service) => (
+          <li>
+            <a class="service-card" href={service.href}>
+              <div class="service-media">
+                <Image
+                  src={heroImages[service.image]}
+                  alt=""
+                  widths={[400, 640]}
+                  sizes="(min-width: 1100px) 380px, (min-width: 700px) 45vw, 100vw"
+                  class="service-img"
+                />
+                <span class="service-icon">
+                  <Icon name={service.icon} />
+                </span>
+              </div>
+              <div class="service-body">
+                <h3>{service.title}</h3>
+                <p>{service.blurb}</p>
+                <span class="service-link">
+                  Learn more <Icon name="arrow-right" />
+                </span>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .services-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-5);
+    margin-bottom: var(--space-7);
+  }
+
+  .services-head .section-head {
+    margin-bottom: 0;
+  }
+
+  .services-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: var(--space-5);
+  }
+
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out),
+      border-color var(--duration-base);
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: transparent;
+  }
+
+  .service-media {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: var(--color-ink-900);
+  }
+
+  .service-media :global(.service-img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1);
+    opacity: 0.85;
+    transition: transform 600ms var(--ease-out), opacity var(--duration-base);
+  }
+
+  .service-card:hover :global(.service-img) {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+
+  .service-icon {
+    position: absolute;
+    left: var(--space-5);
+    bottom: -22px;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: var(--color-red-500);
+    color: var(--color-white);
+    box-shadow: var(--shadow-red);
+  }
+
+  .service-icon :global(svg) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .service-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: var(--space-7) var(--space-5) var(--space-5);
+  }
+
+  .service-body h3 {
+    margin-bottom: var(--space-2);
+  }
+
+  .service-body p {
+    flex: 1;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  .service-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+
+  .service-link :global(svg) {
+    width: 1rem;
+    height: 1rem;
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .service-card:hover .service-link :global(svg) {
+    transform: translateX(4px);
+  }
+</style>

@@ -1,5 +1,6 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import { heroImages } from "../data/images";
 ---
 
 <MainLayout
@@ -7,8 +8,9 @@ import MainLayout from "../layouts/MainLayout.astro";
   description="Freeway Mobile Tyres are one of Dorset's leading mobile tyre services. We'll come to you at home, work or roadside and fit your tyres today."
   heroHeading="Mobile Tyre Fitting In Dorset"
   heroSubheading="Get Your Tyres Fitted at Home, Work or Roadside"
-  heroBgImg="url(/img/services/freeway-mobile-tyres.webp)"
-  mainHeading="Freeway Mobile Tyres - Your Local Mobile Tyre Fitting Experts In Dorset"
+  heroImage={heroImages["freeway-mobile-tyres"]}
+  heroImageAlt="A Freeway Mobile Tyres technician fitting a tyre at the roadside in Dorset"
+  mainHeading="Your Local Mobile Tyre Fitting Experts In Dorset"
 >
   <p>
     Are you stranded at the side of the road with a flat tyre? Or perhaps you
@@ -48,7 +50,7 @@ import MainLayout from "../layouts/MainLayout.astro";
       >locking wheel nut removal</a
     >, <a href="/services/mobile-car-battery-replacement" class="link-danger"
       >mobile car battery replacement</a
-    >, and <a href="/services/alloy-wheel-protection" class="link-danger"
+    >, and <a href="/services/alloygator-wheel-protection" class="link-danger"
       >alloygator wheel protectors</a
     >.
   </p>
