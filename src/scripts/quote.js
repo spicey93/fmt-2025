@@ -39,7 +39,7 @@ const showStep = (index) => {
   const position = Math.max(flow.indexOf(steps[index]), 0) + 1;
   if (stepEl) stepEl.textContent = String(position);
   if (totalEl) totalEl.textContent = String(flow.length);
-  if (progressEl) progressEl.style.width = `${(position / flow.length) * 100}%`;
+  if (progressEl) progressEl.style.transform = `scaleX(${position / flow.length})`;
 };
 
 const goToStep = (stepName) => {

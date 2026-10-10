@@ -6,4 +6,8 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://freewaymobiletyres.co.uk',
   integrations: [sitemap()],
+  build: {
+    // Inline CSS into each page to avoid render-blocking stylesheet requests
+    inlineStylesheets: 'always',
+  },
 });
