@@ -1,79 +1,65 @@
+---
+import Icon from "./Icon.astro";
+import { site } from "../data/site";
+---
 
-<div class="bg-light text-center p-4 rounded w-100" id="quoteForm">
-  <p class="h3">Get a Quote</p>
-  <form name="Contact" method="POST" data-netlify="true">
+<div class="quote-card" id="quoteForm">
+  <div class="quote-head">
+    <div>
+      <p class="quote-title">Get a free quote</p>
+      <p class="quote-sub">Takes under a minute &middot; No obligation</p>
+    </div>
+    <p class="quote-step" aria-live="polite">Step <span data-quote-step>1</span> of <span data-quote-total>7</span></p>
+  </div>
+  <div class="quote-progress" aria-hidden="true"><span data-quote-progress></span></div>
+  <p class="quote-error d-none" role="alert" data-quote-error></p>
+  <form name="Contact" method="POST" data-netlify="true" action="/thanks">
+    <input type="hidden" name="form-name" value="Contact" />
     <!-- Url -->
     <input type="hidden" name="url" id="urlInput" />
+
     <!-- VRM -->
     <div id="vrmDiv">
-      <label class="form-label fs-5">What's the registration?</label>
+      <label class="form-label" for="vrmInput">What's the registration?</label>
       <input
         type="text"
-        class="form-control form-control-lg text-uppercase text-center"
+        class="form-control form-control-plate text-uppercase text-center"
         name="registration"
+        autocomplete="off"
         id="vrmInput"
         placeholder="AB12 CDE"
         required
       />
-      <div class="d-grid mt-2">
-        <button
-          class="btn btn-info rounded-0 btn-lg accent"
-          type="button"
-          id="vrmBtn"
-        >
-          Next
-        </button>
-      </div>
+      <button class="btn btn-primary btn-block btn-lg" type="button" id="vrmBtn">
+        Get my quote <Icon name="arrow-right" />
+      </button>
     </div>
 
     <!-- Service Selection -->
     <div class="d-none" id="serviceDiv">
-      <label class="form-label fs-5">What service do you need?</label>
-      <select
-        id="serviceSelect"
-        name="service"
-        class="form-select form-select-lg"
-        required
-      >
+      <label class="form-label" for="serviceSelect">What service do you need?</label>
+      <select id="serviceSelect" name="service" class="form-select" required>
         <option value="">Choose an option</option>
         <option value="Mobile Tyre Fitting">Mobile Tyre Fitting</option>
-        <option value="Emergency Mobile Tyre Fitting"
-          >Emergency Mobile Tyre Fitting</option
-        >
+        <option value="Emergency Mobile Tyre Fitting">Emergency Mobile Tyre Fitting</option>
         <option value="Puncture Repair">Puncture Repair</option>
-        <option value="Locking Wheel Nut Removal"
-          >Locking Wheel Nut Removal</option
-        >
+        <option value="Locking Wheel Nut Removal">Locking Wheel Nut Removal</option>
         <option value="Battery Replacement">Battery Replacement</option>
         <option value="TPMS">TPMS</option>
       </select>
-      <div class="container">
-        <div class="row mt-2">
-          <button
-            class="btn btn-dark btn-lg col-5 accent rounded-0"
-            type="button"
-            id="serviceBackBtn"
-          >
-            Back
-          </button>
-          <button
-            class="btn btn-info rounded-0 btn-lg accent col-5 offset-2"
-            type="button"
-            id="serviceBtn"
-          >
-            Next
-          </button>
-        </div>
+      <div class="form-step-actions">
+        <button class="btn btn-ghost" type="button" id="serviceBackBtn">Back</button>
+        <button class="btn btn-primary" type="button" id="serviceBtn">Next</button>
       </div>
     </div>
 
     <!-- Tyre Size -->
     <div id="tyreSizeDiv" class="d-none">
-      <label class="form-label fs-5"
-        >What's the tyre size? (This will be on the sidewall of the tyre)</label
-      >
+      <label class="form-label">What's the tyre size?</label>
+      <p class="form-hint">You'll find it on the sidewall, e.g. 205/55 R16</p>
+      <div class="tyre-size-row">
 
-      <select name="tyreWidth" class="form-select mb-2 form-select-lg">
+      <select name="tyreWidth" class="form-select">
         <option value="125">125</option>
         <option value="135">135</option>
         <option value="145">145</option>
@@ -99,7 +85,7 @@
         <option value="335">335</option>
         <option value="345">345</option>
       </select>
-      <select name="tyreProfile" class="form-select mb-2 form-select-lg">
+      <select name="tyreProfile" class="form-select">
         <option value="30">30</option>
         <option value="35">35</option>
         <option value="40">40</option>
@@ -114,7 +100,7 @@
         <option value="80">80</option>
         <option value="85">85</option>
       </select>
-      <select name="tyreDiameter" class="form-select mb-2 form-select-lg">
+      <select name="tyreDiameter" class="form-select">
         <option value="10">R10</option>
         <option value="11">R11</option>
         <option value="12">R12</option>
@@ -131,178 +117,300 @@
         <option value="22">R22</option>
         <option value="23">R23</option>
       </select>
+      </div>
 
-      <div class="container">
-        <div class="row mt-2">
-          <button
-            class="btn btn-dark btn-lg col-5 accent rounded-0"
-            type="button"
-            id="tyreSizeBackBtn"
-            >Back
-          </button>
-          <button
-            class="btn btn-info rounded-0 btn-lg accent col-5 offset-2"
-            type="button"
-            id="tyreSizeBtn"
-          >
-            Next
-          </button>
-        </div>
+      <div class="form-step-actions">
+        <button class="btn btn-ghost" type="button" id="tyreSizeBackBtn">Back</button>
+        <button class="btn btn-primary" type="button" id="tyreSizeBtn">Next</button>
       </div>
     </div>
 
     <!-- Quantity -->
     <div class="d-none" id="quantityDiv">
-      <label class="form-label fs-5">How many tyres do you need replacing / repairing?</label>
-      <select name="quantity" class="form-select form-select-lg">
+      <label class="form-label">How many tyres need replacing or repairing?</label>
+      <select name="quantity" class="form-select">
         <option value="1">1 Tyre</option>
         <option value="2">2 Tyres</option>
         <option value="3">3 Tyres</option>
         <option value="4">4 Tyres</option>
       </select>
-      <div class="container">
-        <div class="row mt-2">
-          <button
-            class="btn btn-dark btn-lg col-5 accent rounded-0"
-            type="button"
-            id="quantityBackBtn"
-          >
-            Back
-          </button>
-          <button
-            class="btn btn-info rounded-0 btn-lg accent col-5 offset-2"
-            type="button"
-            id="quantityBtn"
-          >
-            Next
-          </button>
-        </div>
+      <div class="form-step-actions">
+        <button class="btn btn-ghost" type="button" id="quantityBackBtn">Back</button>
+        <button class="btn btn-primary" type="button" id="quantityBtn">Next</button>
       </div>
     </div>
 
     <!-- Location -->
     <div class="d-none" id="locationDiv">
-      <label class="form-label fs-5">Where are you?</label>
+      <label class="form-label" for="postcodeInput">Where are you?</label>
       <input
         type="text"
-        class="form-control form-control-lg text-uppercase text-center mb-2"
+        class="form-control text-uppercase text-center"
         name="postcode"
         placeholder="Enter Postcode"
         id="postcodeInput"
         required
       />
-      <div class="container">
-        <div class="row mt-2 mb-3">
-          <button
-            class="btn btn-dark btn-lg col-5 accent rounded-0"
-            type="button"
-            role="button"
-            id="locationBackBtn"
-            >Back
-          </button>
-
-          <button
-            class="btn btn-info rounded-0 btn-lg accent col-5 offset-2"
-            type="button"
-            id="postcodeBtn"
-          >
-            Next
-          </button>
-        </div>
+      <div class="form-step-actions">
+        <button class="btn btn-ghost" type="button" role="button" id="locationBackBtn">Back</button>
+        <button class="btn btn-primary" type="button" id="postcodeBtn">Next</button>
       </div>
-      <p class="mb-0">
-        No postcode? <button
-          class="btn btn-secondary btn-sm"
-          id="coordinatesBtn"
-          type="button"
-        >
-          <i class="bi bi-crosshair"></i> Share your location
+      <p class="quote-alt-action">
+        No postcode?
+        <button class="btn btn-sm btn-outline-dark" id="coordinatesBtn" type="button">
+          <Icon name="crosshair" /> Share your location
         </button>
       </p>
     </div>
 
     <!-- Fitment -->
     <div class="d-none" id="fitmentDiv">
-      <label class="form-label fs-5">How soon do you need help?</label>
-      <select name="fitment" class="form-select form-select-lg">
+      <label class="form-label">How soon do you need help?</label>
+      <select name="fitment" class="form-select">
         <option value="ASAP">ASAP</option>
         <option value="Today">Today</option>
         <option value="Not Urgent">Not Urgent</option>
       </select>
-      <div class="container">
-        <div class="row mt-2 mb-3">
-          <button
-            class="btn btn-dark btn-lg col-5 accent rounded-0"
-            type="button"
-            id="fitmentBackBtn"
-            >Back
-          </button>
-          <button
-            class="btn btn-info rounded-0 btn-lg accent col-5 offset-2"
-            type="button"
-            id="fitmentBtn"
-          >
-            Next
-          </button>
-        </div>
+      <div class="form-step-actions">
+        <button class="btn btn-ghost" type="button" id="fitmentBackBtn">Back</button>
+        <button class="btn btn-primary" type="button" id="fitmentBtn">Next</button>
       </div>
     </div>
 
     <!-- Customer -->
     <div id="customerDiv" class="d-none">
-      <label class="form-label fs-5">Who do we contact?</label>
-      <input
-        type="text"
-        class="form-control form-control-lg mb-3"
-        placeholder="Name"
-        required
-        name="name"
-      />
-      <input
-        type="tel"
-        class="form-control form-control-lg mb-3"
-        placeholder="Phone"
-        required
-        name="tel"
-      />
-      <input
-        type="email"
-        class="mb-3 form-control form-control-lg"
-        required
-        name="email"
-        placeholder="Email"
-      />
-      <textarea
-        name="message"
-        class="form-control form-control-lg mb-3"
-        placeholder="Message"></textarea>
-      <div class="container">
-        <div class="row mt-2">
-          <button
-            class="btn btn-dark btn-lg col-5 accent rounded-0"
-            type="button"
-            id="customerBackBtn"
-          >
-            Back
-          </button>
-          <button
-            class="btn btn-info rounded-0 btn-lg accent col-5 offset-2"
-            type="submit"
-            id="customerBtn"
-          >
-            Send
-          </button>
-        </div>
+      <label class="form-label">Who should we contact?</label>
+      <input type="text" class="form-control" placeholder="Name" required name="name" autocomplete="name" />
+      <input type="tel" class="form-control" placeholder="Phone" required name="tel" autocomplete="tel" />
+      <input type="email" class="form-control" required name="email" placeholder="Email" autocomplete="email" />
+      <textarea name="message" class="form-control" placeholder="Message"></textarea>
+      <div class="form-step-actions">
+        <button class="btn btn-ghost" type="button" id="customerBackBtn">Back</button>
+        <button class="btn btn-primary" type="submit" id="customerBtn">Send request</button>
       </div>
     </div>
   </form>
 </div>
 
-<p class="text-white mt-3 text-center">
-    Need help urgently? <br />
-    <span class="fw-bold fs-5"
-      >Call <a href="tel:08007311260" class="link-light">0800 7311 260</a></span
-    >
-  </p>
+<p class="quote-emergency">
+  <Icon name="bolt" />
+  <span>Need help urgently? Call <a href={site.phoneHref}>{site.phone}</a></span>
+</p>
 
-  <script src="/src/scripts/quote.js"></script>
+<script src="/src/scripts/quote.js"></script>
+
+<style>
+  .quote-card {
+    width: 100%;
+    background: var(--color-white);
+    color: var(--color-ink-900);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6) var(--space-5);
+    box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    scroll-margin-top: calc(var(--header-height) + var(--space-4));
+  }
+
+  @media (min-width: 480px) {
+    .quote-card {
+      padding: var(--space-6);
+    }
+  }
+
+  .quote-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+
+  .quote-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--color-ink-950);
+  }
+
+  .quote-sub {
+    margin: var(--space-1) 0 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .quote-step {
+    margin: 0;
+    padding: 0.2rem 0.65rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-ink-100);
+    font-family: var(--font-display);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    color: var(--color-ink-600);
+    white-space: nowrap;
+  }
+
+  .quote-progress {
+    height: 4px;
+    border-radius: 4px;
+    background: var(--color-ink-100);
+    margin-bottom: var(--space-5);
+    overflow: hidden;
+  }
+
+  .quote-progress span {
+    display: block;
+    height: 100%;
+    width: 14%;
+    border-radius: inherit;
+    background: var(--color-red-500);
+    transition: width var(--duration-base) var(--ease-out);
+  }
+
+  .quote-error {
+    margin: 0 0 var(--space-4);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    background: var(--color-red-50);
+    color: var(--color-red-700);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--color-ink-950);
+  }
+
+  .form-hint {
+    margin: calc(var(--space-2) * -1) 0 var(--space-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .form-control,
+  .form-select {
+    width: 100%;
+    font-family: var(--font-body);
+    font-size: var(--font-size-base);
+    padding: 0.8rem 1rem;
+    border: 1.5px solid var(--color-ink-200);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-3);
+    background-color: var(--color-ink-50);
+    color: var(--color-ink-950);
+    transition: border-color var(--duration-fast), box-shadow var(--duration-fast), background-color var(--duration-fast);
+  }
+
+  .form-select {
+    appearance: none;
+    padding-right: 2.5rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235b6270' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.1rem;
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    outline: none;
+    border-color: var(--color-red-500);
+    background-color: var(--color-white);
+    box-shadow: 0 0 0 4px var(--color-red-100);
+  }
+
+  /* UK number plate styling for the registration field */
+  .form-control-plate {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    background: #ffd42a;
+    border: 2px solid var(--color-ink-950);
+    color: var(--color-ink-950);
+    padding-block: 0.65rem;
+  }
+
+  .form-control-plate::placeholder {
+    color: rgba(11, 13, 16, 0.35);
+  }
+
+  .form-control-plate:focus {
+    background: #ffd42a;
+    border-color: var(--color-ink-950);
+    box-shadow: 0 0 0 4px rgba(255, 212, 42, 0.45);
+  }
+
+  .tyre-size-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2);
+  }
+
+  .tyre-size-row .form-select {
+    padding-inline: 0.75rem 1.75rem;
+    background-position: right 0.4rem center;
+  }
+
+  .text-uppercase {
+    text-transform: uppercase;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  textarea.form-control {
+    min-height: 5.5rem;
+    resize: vertical;
+  }
+
+  .form-step-actions {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  .quote-alt-action {
+    margin: var(--space-4) 0 0;
+    text-align: center;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+  }
+
+  .quote-emergency {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    margin: var(--space-4) 0 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-ink-300);
+  }
+
+  .quote-emergency > :global(svg) {
+    width: 1rem;
+    height: 1rem;
+    color: var(--color-red-400);
+  }
+
+  .quote-emergency a {
+    color: var(--color-white);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.35);
+    text-underline-offset: 3px;
+  }
+</style>

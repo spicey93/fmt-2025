@@ -1,40 +1,227 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro"
-import Heading from "../components/Heading.astro"
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Heading from "../components/Heading.astro";
+import Icon from "../components/Icon.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { site } from "../data/site";
+
+const reviewLinks = [
+  { icon: "google" as const, label: "Google", href: "https://g.page/fmtyres/review?rc" },
+  { icon: "facebook" as const, label: "Facebook", href: "https://www.facebook.com/dorsetmobiletyres/reviews" },
+  { icon: "yelp" as const, label: "Yell", href: "https://www.yell.com/biz/freeway-mobile-tyres-poole-6691550/#reviews" },
+];
 ---
 
 <BaseLayout title="Contact Us" description="If you want more information regarding our services, or would like a price, then get in contact with us today.">
-    <Heading text="Contact Us"  />
-            <!-- Content -->
-            <div class="container mb-5">
-                <div class="row">
-                    <div class="col-12 col-lg-6">
-                        <h2>Get In Touch With Our Team</h2>
-                        <p>If you would like a quote for our services, or require more information on a particular issue, you can get in touch with us via email or using our quotation form. A member of our will respond within 24 to 48 hours of your initial contact. </p>
-                        <p>For a more immediate response, we encourage you to call us directly.</p>
-                        <div>
-                            <i class="bi bi-telephone-fill me-2"></i> 0800 7311 260
-                        </div>
-                        <div>
-                            <i class="bi bi-envelope-fill me-2"></i> freewaytyre@btconnect.com
-                        </div>
-                        <div>
-                            <i class="bi bi-map-fill me-2"></i> 31A Banbury Road, Nuffield Industrial Estate BH17 0GA
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <h2>Leave Us A Review!</h2>
-                        <p>We’d love to hear your feedback if you’ve recently used our service. Follow the links below to leave a review for our business.</p>
-                        <div>
-                            <i class="bi bi-google me-2"></i> Review us on <a class="link-danger" href="https://g.page/fmtyres/review?rc" target="_blank" rel="noopener noreferrer">Google</a>
-                        </div>
-                        <div>
-                            <i class="bi bi-facebook me-2"></i> Review us on <a class="link-danger" href="https://www.facebook.com/dorsetmobiletyres/reviews" target="_blank" rel="noopener noreferrer">Facebook</a>
-                        </div>
-                        <div>
-                            <i class="bi bi-yelp me-2"></i> Review us on <a class="link-danger" href="https://www.yell.com/biz/freeway-mobile-tyres-poole-6691550/#reviews" target="_blank" rel="noopener noreferrer">Yell</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <Heading
+    text="Get in touch with our team"
+    eyebrow="Contact us"
+    intro="If you would like a quote for our services, or require more information on a particular issue, you can get in touch with us via email or using our quotation form."
+  />
+
+  <section class="section">
+    <div class="container contact-grid">
+      <a class="contact-card contact-card--primary" href={site.phoneHref}>
+        <span class="contact-icon"><Icon name="telephone" /></span>
+        <span class="contact-label">Call us — fastest response</span>
+        <span class="contact-value">{site.phone}</span>
+        <span class="contact-note">Freephone, open 7 days a week</span>
+      </a>
+
+      <a class="contact-card" href={`mailto:${site.email}`}>
+        <span class="contact-icon"><Icon name="envelope" /></span>
+        <span class="contact-label">Email</span>
+        <span class="contact-value contact-value--sm">{site.email}</span>
+        <span class="contact-note">We reply within 24 to 48 hours</span>
+      </a>
+
+      <div class="contact-card">
+        <span class="contact-icon"><Icon name="map" /></span>
+        <span class="contact-label">Head office &amp; depot</span>
+        <span class="contact-value contact-value--sm">{site.address}</span>
+        <span class="contact-note">Second depot in Shaftesbury</span>
+      </div>
+    </div>
+
+    <div class="container contact-lower">
+      <div class="prose">
+        <h2>Prefer to speak to someone?</h2>
+        <p>
+          A member of our team will respond within 24 to 48 hours of your initial contact. For a more immediate
+          response, we encourage you to call us directly.
+        </p>
+        <p>
+          <a class="btn btn-primary" href="/#quoteForm">Request a quote online <Icon name="arrow-right" /></a>
+        </p>
+      </div>
+
+      <div class="review-box">
+        <h2>Leave us a review</h2>
+        <p>We'd love to hear your feedback if you've recently used our service.</p>
+        <ul class="review-links">
+          {
+            reviewLinks.map((link) => (
+              <li>
+                <a href={link.href} target="_blank" rel="noopener noreferrer">
+                  <Icon name={link.icon} class="review-logo" />
+                  Review us on {link.label}
+                  <Icon name="arrow-right" class="review-arrow" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand quoteHref="/#quoteForm" />
 </BaseLayout>
+
+<style>
+  .contact-grid {
+    display: grid;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+
+  @media (min-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1.2fr 1fr 1fr;
+    }
+  }
+
+  .contact-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    background: var(--color-white);
+    color: var(--color-ink-900);
+    text-decoration: none;
+    transition: transform var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+  }
+
+  a.contact-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .contact-card--primary {
+    background: var(--color-red-500);
+    border-color: var(--color-red-500);
+    color: var(--color-white);
+  }
+
+  .contact-icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-red-50);
+    color: var(--color-accent);
+  }
+
+  .contact-card--primary .contact-icon {
+    background: rgba(255, 255, 255, 0.18);
+    color: var(--color-white);
+  }
+
+  .contact-icon :global(svg) {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .contact-label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    opacity: 0.8;
+  }
+
+  .contact-value {
+    font-family: var(--font-display);
+    font-size: 1.85rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+
+  .contact-value--sm {
+    font-size: var(--font-size-lg);
+  }
+
+  .contact-note {
+    font-size: var(--font-size-sm);
+    opacity: 0.75;
+  }
+
+  .contact-lower {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  @media (min-width: 900px) {
+    .contact-lower {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+    }
+  }
+
+  .review-box {
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  .review-box p {
+    color: var(--color-text-muted);
+  }
+
+  .review-links {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-5) 0 0;
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .review-links a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    font-weight: 600;
+    color: var(--color-ink-900);
+    text-decoration: none;
+    transition: border-color var(--duration-fast);
+  }
+
+  .review-links a:hover {
+    border-color: var(--color-ink-950);
+  }
+
+  .review-links :global(.review-logo) {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .review-links a > :global(svg:first-child) {
+    color: #1877f2;
+  }
+
+  .review-links :global(.review-arrow) {
+    width: 1rem;
+    height: 1rem;
+    margin-left: auto;
+    color: var(--color-ink-400);
+  }
+</style>

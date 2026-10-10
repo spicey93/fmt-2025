@@ -1,0 +1,95 @@
+---
+import Icon from "./Icon.astro";
+import { coverageDropdown } from "../data/nav";
+
+const currentPath = Astro.url.pathname.replace(/\/$/, "");
+---
+
+<section class="section coverage">
+  <div class="container coverage-inner">
+    <div class="section-head">
+      <p class="eyebrow">Areas we cover</p>
+      <h2>Mobile tyre fitting across Dorset</h2>
+      <p>
+        With depots in Poole and Shaftesbury, our vans reach towns and villages right across the county —
+        from the coast to the Blackmore Vale.
+      </p>
+    </div>
+
+    <ul class="coverage-list">
+      {
+        coverageDropdown.subPages.map((page) => {
+          const href = `/${coverageDropdown.slug}/${page.slug}`;
+          return (
+            <li>
+              <a href={href} aria-current={currentPath === href ? "page" : undefined}>
+                <Icon name="map" />
+                {page.title}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .coverage {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .coverage-inner {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 992px) {
+    .coverage-inner {
+      grid-template-columns: 0.9fr 1.1fr;
+      align-items: center;
+      gap: var(--space-8);
+    }
+
+    .coverage-inner .section-head {
+      margin-bottom: 0;
+    }
+  }
+
+  .coverage-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .coverage-list a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-white);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-ink-800);
+    text-decoration: none;
+    transition: border-color var(--duration-fast), color var(--duration-fast), background-color var(--duration-fast);
+  }
+
+  .coverage-list a:hover,
+  .coverage-list a[aria-current="page"] {
+    border-color: var(--color-red-500);
+    background: var(--color-red-50);
+    color: var(--color-red-600);
+  }
+
+  .coverage-list :global(svg) {
+    width: 1rem;
+    height: 1rem;
+    color: var(--color-accent);
+  }
+</style>

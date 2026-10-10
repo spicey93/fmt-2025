@@ -1,10 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import StatusPanel from "../components/StatusPanel.astro";
 ---
 
-<BaseLayout title="Thanks" description="Thank you page.">
-    <div class="container py-5">
-        <h1>Error</h1>
-        <p>An error has occurred.</p>
-    </div>
-  </BaseLayout>
+<BaseLayout title="Error" description="An error has occurred.">
+  <StatusPanel icon="x" heading="Error" tone="error">
+    <p>An error has occurred.</p>
+    <a href="/" class="btn btn-dark">Return to the homepage</a>
+  </StatusPanel>
+</BaseLayout>

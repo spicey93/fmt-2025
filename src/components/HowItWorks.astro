@@ -1,0 +1,114 @@
+---
+import Icon from "./Icon.astro";
+import type { IconName } from "./Icon.astro";
+
+const steps: { icon: IconName; title: string; text: string }[] = [
+  {
+    icon: "phone",
+    title: "Call or request a quote",
+    text: "Tell us your registration, tyre size and where you are. We'll give you a clear, all-in price.",
+  },
+  {
+    icon: "route",
+    title: "We drive to you",
+    text: "A fully-stocked van heads to your home, workplace or roadside — often the same day.",
+  },
+  {
+    icon: "check-circle",
+    title: "Back on the road",
+    text: "We fit, balance and check everything while you carry on with your day. Old tyres taken away.",
+  },
+];
+---
+
+<section class="section">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <p class="eyebrow">How it works</p>
+      <h2>Sorted in three simple steps</h2>
+      <p>No garage visits, no waiting rooms. We bring the tyre shop to you.</p>
+    </div>
+
+    <ol class="steps">
+      {
+        steps.map((step, index) => (
+          <li class="step">
+            <span class="step-number">{String(index + 1).padStart(2, "0")}</span>
+            <span class="step-icon">
+              <Icon name={step.icon} />
+            </span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    counter-reset: none;
+  }
+
+  @media (min-width: 860px) {
+    .steps {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .step {
+    position: relative;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    overflow: hidden;
+  }
+
+  .step-number {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-5);
+    font-family: var(--font-display);
+    font-size: 4.5rem;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--color-ink-100);
+    pointer-events: none;
+  }
+
+  .step-icon {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    margin-bottom: var(--space-5);
+    border-radius: 50%;
+    background: var(--color-ink-950);
+    color: var(--color-white);
+  }
+
+  .step-icon :global(svg) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .step h3 {
+    position: relative;
+    margin-bottom: var(--space-2);
+  }
+
+  .step p {
+    position: relative;
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+</style>

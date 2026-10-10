@@ -1,73 +1,110 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Heading from "../components/Heading.astro";
+import Icon from "../components/Icon.astro";
+import { navGroups } from "../data/nav";
+
+const otherGroups = [
+  {
+    title: "Company",
+    links: [
+      { label: "Home", href: "/" },
+      { label: "About", href: "/about" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
+  {
+    title: "Legal Pages",
+    links: [
+      { label: "Cookie Policy", href: "/cookie-policy" },
+      { label: "Terms & Conditions", href: "/terms-and-conditions" },
+      { label: "Privacy Policy", href: "/privacy-policy" },
+    ],
+  },
+];
+
+const groups = [
+  ...navGroups.map((group) => ({
+    title: group.title,
+    links: group.subPages.map((page) => ({ label: page.title, href: `/${group.slug}/${page.slug}` })),
+  })),
+  ...otherGroups,
+];
 ---
 
-<BaseLayout title="Sitemap | Freeway Mobile Tyres" description="Sitemap for Freeway Mobile Tyres">
-  <Heading text="Sitemap" />
-  <div class="container">
-    <p><a class="link-danger" href="/">Home</a></p>
-    <p>Mobile Tyres</p>
-    <ul>
-      <li>
-        <a class="link-danger" href="/mobile-tyres/mobile-tyre-fitting">Mobile Tyre Fitting</a>
-      </li>
-      <li>
-        <a class="link-danger" href="/mobile-tyres/emergency-mobile-tyre-fitting"
-          >Emergency Mobile Tyre Fitting</a>
-      </li>
-      <li>
-        <a class="link-danger" href="/mobile-tyres/mobile-caravan-tyre-fitting"
-          >Mobile Caravan Tyre Fitting</a>
-      </li>
-      <li><a class="link-danger" href="/mobile-tyres/puncture-repair">Puncture Repair</a></li>
-    </ul>
-    <p>Services</p>
-    <ul>
-      <li>
-        <a class="link-danger" href="/services/locking-wheel-nut-removal"
-          >Locking Wheel Nut Removal</a>
-      </li>
-      <li>
-        <a class="link-danger" href="/services/tyre-pressure-monitoring-system"
-          >Tyre Pressure Monitoring System</a>
-      </li>
-      <li>
-        <a class="link-danger" href="/services/mobile-car-battery-system"
-          >Mobile Car Battery System</a>
-      </li>
-      <li><a class="link-danger" href="/services/mobile-brake-fitting">Mobile Brake Fitting</a></li>
-      <li>
-        <a class="link-danger" href="/services/alloygator-wheel-protection"
-          >Alloygator Wheel Protection</a>
-      </li>
-      <li>
-        <a class="link-danger" href="/services/alloy-wheel-repair"
-          >Alloy Wheel Repair</a>
-      </li>
-    </ul>
-    <p>Coverage</p>
-    <ul>
-      <li><a class="link-danger" href="/coverage/blandford-forum">Blandford Forum</a></li>
-      <li><a class="link-danger" href="/coverage/bournemouth">Bournemouth</a></li>
-      <li><a class="link-danger" href="/coverage/christchurch">Christchurch</a></li>
-      <li><a class="link-danger" href="/coverage/dorchester">Dorchester</a></li>
-      <li><a class="link-danger" href="/coverage/poole">Poole</a></li>
-      <li><a class="link-danger" href="/coverage/ringwood">Ringwood</a></li>
-      <li><a class="link-danger" href="/coverage/shaftesbury">Shaftesbury</a></li>
-      <li><a class="link-danger" href="/coverage/sturminster-newton">Sturminster Newton</a></li>
-      <li><a class="link-danger" href="/coverage/swanage">Swanage</a></li>
-      <li><a class="link-danger" href="/coverage/verwood">Verwood</a></li>
-      <li><a class="link-danger" href="/coverage/weymouth">Weymouth</a></li>
-      <li><a class="link-danger" href="/coverage/wimborne">Wimborne</a></li>
-    </ul>
-    <p><a class="link-danger" href="/about">About</a></p>
-    <p><a class="link-danger" href="/contact">Contact</a></p>
-    <p>Legal Pages</p>
-    <ul>
-      <li><a class="link-danger" href="/cookie-policy">Cookie Policy</a></li>
-      <li><a class="link-danger" href="/terms-and-conditions">Terms & Conditions</a></li>
-      <li class="mb-5"><a class="link-danger" href="/privacy-policy">Privacy Policy</a></li>
-    </ul>
-  </div>
+<BaseLayout title="Site Map" description="Site map for Freeway Mobile Tyres">
+  <Heading text="Site Map" eyebrow="Find your way" />
+  <section class="section">
+    <div class="container sitemap-grid">
+      {
+        groups.map((group) => (
+          <div class="sitemap-group">
+            <h2>{group.title}</h2>
+            <ul>
+              {group.links.map((link) => (
+                <li>
+                  <a href={link.href}>
+                    {link.label}
+                    <Icon name="arrow-right" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .sitemap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+    gap: var(--space-5);
+  }
+
+  .sitemap-group {
+    padding: var(--space-5) var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .sitemap-group h2 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-3);
+  }
+
+  .sitemap-group ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sitemap-group a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+    border-bottom: 1px solid var(--color-ink-100);
+    color: var(--color-ink-700);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color var(--duration-fast);
+  }
+
+  .sitemap-group li:last-child a {
+    border-bottom: 0;
+  }
+
+  .sitemap-group a:hover {
+    color: var(--color-accent);
+  }
+
+  .sitemap-group :global(svg) {
+    width: 1rem;
+    height: 1rem;
+    color: var(--color-ink-300);
+  }
+</style>

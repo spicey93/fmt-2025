@@ -1,7 +1,64 @@
 ---
-const { text } = Astro.props;
+import Breadcrumbs from "./Breadcrumbs.astro";
+
+interface Props {
+  text: string;
+  eyebrow?: string;
+  intro?: string;
+}
+
+const { text, eyebrow, intro } = Astro.props;
 ---
 
-<div class="py-5 bg-light mb-5">
-        <h1 class="text-center fw-bold">{text}</h1>
+<div class="page-heading">
+  <div class="container">
+    <Breadcrumbs variant="dark" />
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1>{text}</h1>
+    {intro && <p class="page-heading-intro">{intro}</p>}
+  </div>
 </div>
+
+<style>
+  .page-heading {
+    position: relative;
+    background:
+      radial-gradient(ellipse 50% 90% at 100% 0%, rgba(208, 31, 39, 0.35), transparent 70%),
+      var(--color-ink-950);
+    color: var(--color-white);
+    padding-block: var(--space-6) var(--space-8);
+    overflow: hidden;
+  }
+
+  .page-heading::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 6px;
+    background: repeating-linear-gradient(90deg, var(--color-red-500) 0 48px, transparent 48px 72px);
+  }
+
+  .page-heading :global(.breadcrumbs) {
+    margin-bottom: var(--space-7);
+  }
+
+  .page-heading .eyebrow {
+    color: var(--color-red-400);
+  }
+
+  .page-heading h1 {
+    color: var(--color-white);
+    font-size: var(--font-size-3xl);
+    max-width: 20ch;
+    margin: 0;
+  }
+
+  .page-heading-intro {
+    margin: var(--space-4) 0 0;
+    max-width: 40rem;
+    font-size: var(--font-size-lg);
+    color: var(--color-ink-300);
+  }
+</style>
