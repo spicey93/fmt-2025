@@ -18,13 +18,10 @@ if (modal) {
     panel?.setAttribute("aria-label", "Get a free quote");
     document.body.style.overflow = "hidden";
 
-    // Focus the first visible field once the modal has become visible
-    setTimeout(() => {
-      const field = modal.querySelector(
-        "form > div:not(.d-none) input:not([type=hidden]), form > div:not(.d-none) select"
-      );
-      field?.focus({ preventScroll: true });
-    }, 60);
+    // Move focus to the dialog itself rather than the first field: focusing an input
+    // pops up the on-screen keyboard, which covers the form before people can read it
+    panel?.setAttribute("tabindex", "-1");
+    panel?.focus({ preventScroll: true });
   };
 
   const close = () => {
@@ -33,6 +30,7 @@ if (modal) {
     panel?.removeAttribute("role");
     panel?.removeAttribute("aria-modal");
     panel?.removeAttribute("aria-label");
+    panel?.removeAttribute("tabindex");
     document.body.style.overflow = "";
     if (modal.contains(document.activeElement)) document.activeElement.blur();
     if (lastFocused instanceof HTMLElement && lastFocused !== document.body) {

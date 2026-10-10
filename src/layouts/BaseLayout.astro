@@ -80,11 +80,6 @@ const pageTitle = title.includes("Freeway Mobile Tyres") ? title : `${title} | F
     <main>
       <slot />
     </main>
-    <section class="footer-reviews">
-      <div class="container" data-elfsight-lazy>
-        <div class="elfsight-app-3e598403-f57d-42a8-8f96-38f94dfdd86e"></div>
-      </div>
-    </section>
     <Footer />
 
     <script src="/src/scripts/nav.js"></script>
@@ -92,10 +87,3 @@ const pageTitle = title.includes("Freeway Mobile Tyres") ? title : `${title} | F
     <script src="/src/scripts/lazyWidgets.js"></script>
   </body>
 </html>
-
-<style>
-  .footer-reviews {
-    padding-block: var(--space-6);
-    border-top: 1px solid var(--color-border);
-  }
-</style>
