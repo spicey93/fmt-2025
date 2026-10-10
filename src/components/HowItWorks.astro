@@ -33,7 +33,7 @@ const steps: { icon: IconName; title: string; text: string }[] = [
       {
         steps.map((step, index) => (
           <li class="step">
-            <span class="step-number">{String(index + 1).padStart(2, "0")}</span>
+            <span class="step-number" aria-hidden="true" data-step={String(index + 1).padStart(2, "0")} />
             <span class="step-icon">
               <Icon name={step.icon} />
             </span>
@@ -69,6 +69,10 @@ const steps: { icon: IconName; title: string; text: string }[] = [
     border-radius: var(--radius-lg);
     background: var(--color-surface);
     overflow: hidden;
+  }
+
+  .step-number::before {
+    content: attr(data-step);
   }
 
   .step-number {

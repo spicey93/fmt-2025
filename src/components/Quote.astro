@@ -263,10 +263,11 @@ import { site } from "../data/site";
   .quote-progress span {
     display: block;
     height: 100%;
-    width: 14%;
     border-radius: inherit;
     background: var(--color-red-500);
-    transition: width var(--duration-base) var(--ease-out);
+    transform: scaleX(0.14);
+    transform-origin: left center;
+    transition: transform var(--duration-base) var(--ease-out);
   }
 
   .quote-error {
